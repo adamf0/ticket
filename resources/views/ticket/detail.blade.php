@@ -118,6 +118,25 @@
                 </div>
             </div>
         </div>
+        @if( $ticket->id_user_pic != null && $ticket->status==1 && Session::has('level_user') && Session::get('level_user')=="2" )
+            <div class="row">
+                <div class="col-12">
+                    <div class="card text-dark bg-light mb-3">
+                        <div class="card-header">
+                            <label>Perkembangan Tugas</label> 
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('ticket.progress.create',['id'=>$ticket->id]) }}" method="post">
+                                @csrf
+                                <label>Perkembangan Terakhir</label>
+                                <input type="text" name="progress" class="form-control">
+                                <input type="submit" value="Kirim" class="btn btn-primary">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card text-dark bg-light mb-3">

@@ -40,7 +40,7 @@
                             <td>Foto</td>
                             <td>PIC</td>
                             <td>Status</td>
-                            @if ( Session::has('level_user') && (Session::get('level_user')=="1" || Session::get('level_user')=="2")  )
+                            @if ( Session::has('level_user') && (Session::get('level_user')=="1" || Session::get('level_user')=="2") )
                                 <td>Aksi</td>
                             @endif
                         </tr>
@@ -77,7 +77,7 @@
                             <td>
                                 @if ( Session::has('level_user') && Session::get('level_user')=="1" )
                                     <?php echo ($ticket->pic==null? "Belum ada PIC":$ticket->pic->nama); ?>
-                                @elseif (Session::has('level_user') && Session::get('level_user')=="2")
+                                @elseif (Session::has('level_user') && Session::get('level_user')=="3")
                                     @if ($ticket->pic==null)
                                         <a href="#" class="btn btn-primary">Tambah PIC</a>
                                     @else
@@ -104,10 +104,12 @@
                                     }
                                 ?>
                             </td>
-                            @if ( Session::has('level_user') && Session::get('level_user')=="1" )
+                            @if ( Session::has('level_user') )
                                 <td>
-                                    <a href="{{ route('ticket.detail', ['id'=> $ticket->id]) }}" class="btn btn-primary">detail</a>
-                                    @if ($ticket->status != 2)
+                                    @if (Session::get('level_user')=="1" || Session::get('level_user')=="2")
+                                        <a href="{{ route('ticket.detail', ['id'=> $ticket->id]) }}" class="btn btn-primary">detail</a>
+                                    @endif
+                                    @if (Session::get('level_user')=="1" && $ticket->status != 2)
                                         <a href="{{ route('ticket.destroy', ['id'=> $ticket->id]) }}" class="btn btn-secondary">tutup tiket</a>        
                                     @endif
                                 </td>

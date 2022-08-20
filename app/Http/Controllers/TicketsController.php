@@ -9,7 +9,7 @@ use App\Models\Chats;
 class TicketsController extends Controller
 {
     public function __construct(){
-        session(['level_user' => "1"]);
+        session(['level_user' => "3"]);
     }
     public function index(){
         return view('index',[

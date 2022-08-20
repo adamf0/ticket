@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\ChatsController;
+use App\Http\Controllers\ProgressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,9 @@ Route::group(['prefix'=>'user'], function(){
     Route::post('/ticket/create', [TicketsController::class,'create'])->name('ticket.create');
     Route::get('/ticket/close/{id}', [TicketsController::class,'destroy'])->name('ticket.destroy');
     Route::post('/ticket/chat/{id}', [ChatsController::class,'create'])->name('ticket.chat.create');
+    Route::post('/ticket/progress/{id}', [ProgressController::class,'create'])->name('ticket.progress.create'); 
 });
+// Route::group(['prefix'=>'admin'], function(){
+//     Route::get('/ticket', [TicketUsersController::class,'index'])->name('ticket_user.index');
+//     Route::get('/ticket/detail/{id}', [TicketUsersController::class,'detail'])->name('ticket_user.detail');
+// });
