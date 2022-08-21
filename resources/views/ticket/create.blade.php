@@ -9,10 +9,10 @@
             <form action="{{ route('ticket.create') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="col-10">
+                    <!-- <div class="col-10">
                         <label>User</label>
                         <input type="text" class="form-control" name="id_user" required>
-                    </div>
+                    </div> -->
                     <div class="col-5">
                         <label>Tipe Tiket</label>
                         <select class="form-control" name="type_ticket" required>

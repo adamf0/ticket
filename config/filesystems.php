@@ -41,6 +41,14 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'ticket_folder' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/ticket',
+        ],
+        'chat_folder' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/chat',
+        ],
 
         's3' => [
             'driver' => 's3',

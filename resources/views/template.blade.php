@@ -7,10 +7,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
     <title>Aplikasi Tiket</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sticky-footer-navbar/">
     <link href="<?php echo asset('assets/dist/css/bootstrap.min.css'); ?>" rel="stylesheet">
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -80,6 +77,9 @@
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                   <li class="nav-item">
                       <a class="nav-link active" aria-current="page" href="{{ route('ticket.index') }}">Beranda</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{{ route('logout') }}">Logout</a>
                   </li>
                 </ul>
                 <!-- <li class="nav-item">

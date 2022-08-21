@@ -50,9 +50,9 @@
                             <label>Deskripsi:</label> {{ $ticket->deskripsi }} <br>
                             <label>Foto:</label> 
                             <?php
-                                if( file_exists(public_path()."/".$ticket->foto) ){
+                                if( file_exists(public_path()."/ticket/$ticket->foto") ){
                             ?>
-                                <a href="<?php echo asset($ticket->foto) ?>" target="_blank">{{ $ticket->foto }} </a>
+                                <a href="<?php echo asset("/ticket/$ticket->foto") ?>" target="_blank">{{ $ticket->foto }} </a>
                             <?php
                                 }
                                 else{
@@ -85,7 +85,7 @@
                             <?php
                                 if($ticket->label == 0){
                             ?>
-                                <span class="badge bg-info">Tidak Cepat</span>
+                                <span class="badge bg-secondary">Tidak Butuh Cepat</span>
                             <?php
                                 }
                                 else if($ticket->label == 1){
@@ -118,34 +118,16 @@
                 </div>
             </div>
         </div>
-        @if( $ticket->id_user_pic != null && $ticket->status==1 && Session::has('level_user') && Session::get('level_user')=="2" )
-            <div class="row">
-                <div class="col-12">
-                    <div class="card text-dark bg-light mb-3">
-                        <div class="card-header">
-                            <label>Perkembangan Tugas</label> 
-                        </div>
-                        <div class="card-body">
-                            <form action="{{ route('ticket.progress.create',['id'=>$ticket->id]) }}" method="post">
-                                @csrf
-                                <label>Perkembangan Terakhir</label>
-                                <input type="text" name="progress" class="form-control">
-                                <input type="submit" value="Kirim" class="btn btn-primary">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card text-dark bg-light mb-3">
                     <div class="card-body">
-                        <form action="{{ route('ticket.chat.create',['id'=>$ticket->id]) }}" method="post">
+                        <form action="{{ route('ticket.chat.create',['id'=>$ticket->id]) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <label>Pesan</label>
-                            <input type="text" name="pesan" class="form-control" @if($ticket->id_user_pic == null || $ticket->status==2) {{ "disabled" }} @endif>
-                            <input type="submit" value="Kirim" class="btn btn-primary" @if($ticket->id_user_pic == null || $ticket->status==2) {{ "disabled" }} @endif>
+                            <input type="text" name="pesan" class="form-control" required @if($ticket->status==0 || $ticket->id_user_pic == null || $ticket->status==2) {{ "disabled" }} @endif>
+                            <input type="file" name="foto" class="form-control" @if($ticket->status==0 || $ticket->id_user_pic == null || $ticket->status==2) {{ "disabled" }} @endif>
+                            <input type="submit" value="Kirim" class="btn btn-primary" @if($ticket->status==0 || $ticket->id_user_pic == null || $ticket->status==2) {{ "disabled" }} @endif>
                         </form>
                     </div>
                     <div class="card-header">
@@ -153,21 +135,42 @@
                     </div>
                     <div class="card-body">
                         @php
-                            $id_user = 1;
+                            $id_user = Session::get('id_user');
                         @endphp
 
                         @if (count($chats)==0)
                             Upss belum ada percakapan dengan PIC
                         @else
                             @foreach ($chats as $chat)
-                                <div class="<?php echo ($chat->to_name->id==$id_user? "text-start":"text-end"); ?>">
-                                    <div class="card-header">
-                                        <label>{{ $chat->to_name->nama }}</label></b>
+                                @if ($chat->from_name->id==$id_user)
+                                    <div class="text-start">
+                                        <div class="card-header">
+                                            <label><?php echo $chat->from_name->nama; ?></label></b>
+                                        </div>
+                                @else
+                                    <div class="text-end">
+                                        <div class="card-header">
+                                            <label><?php echo $chat->from_name->nama; ?></label></b>
+                                        </div>
+                                @endif
+                                        <div class="card-body">
+                                            <p>{{ $chat->deskripsi }}</p>
+                                            <?php
+                                                if($chat->foto != null){
+                                                    if( file_exists(public_path()."/chat/$chat->foto") ){
+                                            ?>
+                                                        <a href="<?php echo asset("/chat/$chat->foto") ?>" target="_blank">{{ $chat->foto }} </a>
+                                            <?php
+                                                    }
+                                                    else{
+                                            ?>
+                                                        {{ $chat->foto }} 
+                                            <?php
+                                                    }
+                                                }
+                                            ?>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <p>{{ $chat->deskripsi }}</p>
-                                    </div>
-                                </div>
                             @endforeach
                         @endif                        
                     </div>

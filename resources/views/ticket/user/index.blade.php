@@ -5,9 +5,7 @@
                 <h1>Tiket</h1>
             </div>
             <div class="col-2">
-                @if (Session::has('level_user') && Session::get('level_user')=="1" )
-                    <a class="btn btn-lg btn-primary pull-right" href="{{ route('ticket.add') }}" role="button">Tambah Tiket</a>
-                @endif
+                <a class="btn btn-lg btn-primary pull-right" href="{{ route('ticket.add') }}" role="button">Tambah Tiket</a>
             </div>
             @if( Session::has('type_modal') && Session::has('message') )
                 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
@@ -40,9 +38,7 @@
                             <td>Foto</td>
                             <td>PIC</td>
                             <td>Status</td>
-                            @if ( Session::has('level_user') && (Session::get('level_user')=="1" || Session::get('level_user')=="2") )
-                                <td>Aksi</td>
-                            @endif
+                            <td>Aksi</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,36 +50,43 @@
                                 <?php echo $ticket->no_ticket; ?>
                                 <br>
                                 <?php
-                                    if($ticket->type_ticket == 0){
+                                    if($ticket->label == 0){
                                 ?>
-                                    <span class="badge bg-warning">Troubleshooting</span>
+                                    <span class="badge bg-secondary">Tidak Butuh Cepat</span>
                                 <?php
                                     }
-                                    else if($ticket->type_ticket == 1){
+                                    else if($ticket->label == 1){
                                 ?>
-                                    <span class="badge bg-success">Pengadaan Barang</span>
+                                    <span class="badge bg-success">Biasa</span>
                                 <?php
                                     }
                                     else{
                                 ?>
-                                    <span class="badge bg-danger">Maintenance</span>
+                                    <span class="badge bg-danger">Butuh Cepat</span>
                                 <?php
                                     }
                                 ?>
                             </td>
                             <td><?php echo $ticket->judul; ?></td>
                             <td><?php echo $ticket->deskripsi; ?></td>
-                            <td><?php echo $ticket->foto; ?></td>
                             <td>
-                                @if ( Session::has('level_user') && Session::get('level_user')=="1" )
-                                    <?php echo ($ticket->pic==null? "Belum ada PIC":$ticket->pic->nama); ?>
-                                @elseif (Session::has('level_user') && Session::get('level_user')=="3")
-                                    @if ($ticket->pic==null)
-                                        <a href="#" class="btn btn-primary">Tambah PIC</a>
-                                    @else
-                                        {{ $ticket->pic->nama }}
-                                    @endif
-                                @endif
+                                <?php
+                                    if($ticket->foto != null){
+                                        if( file_exists(public_path()."/ticket/$ticket->foto") ){
+                                    ?>
+                                            <a href="<?php echo asset("/ticket/$ticket->foto") ?>" target="_blank">{{ $ticket->foto }} </a>
+                                    <?php
+                                        }
+                                        else{
+                                    ?>
+                                        {{ $ticket->foto }} 
+                                    <?php
+                                        }
+                                    }
+                                ?>
+                            </td>
+                            <td>
+                                <?php echo ($ticket->pic==null? "Belum ada PIC":$ticket->pic->nama); ?>
                             </td>
                             <td>
                                 <?php
@@ -104,17 +107,12 @@
                                     }
                                 ?>
                             </td>
-                            @if ( Session::has('level_user') )
-                                <td>
-                                    @if (Session::get('level_user')=="1" || Session::get('level_user')=="2")
-                                        <a href="{{ route('ticket.detail', ['id'=> $ticket->id]) }}" class="btn btn-primary">detail</a>
-                                    @endif
-                                    @if (Session::get('level_user')=="1" && $ticket->status != 2)
-                                        <a href="{{ route('ticket.destroy', ['id'=> $ticket->id]) }}" class="btn btn-secondary">tutup tiket</a>        
-                                    @endif
-                                </td>
-                            @endif
-                            
+                            <td>
+                                <a href="{{ route('ticket.detail', ['id'=> $ticket->id]) }}" class="btn btn-primary">detail</a>
+                                @if ($ticket->status != 2)
+                                    <a href="{{ route('ticket.destroy', ['id'=> $ticket->id]) }}" class="btn btn-secondary">tutup tiket</a>        
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
