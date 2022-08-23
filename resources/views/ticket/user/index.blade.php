@@ -5,7 +5,11 @@
                 <h1>Tiket</h1>
             </div>
             <div class="col-2">
-                <a class="btn btn-lg btn-primary pull-right" href="{{ route('ticket.add') }}" role="button">Tambah Tiket</a>
+                @if ($tickets->total_waiting<=3)
+                    <a class="btn btn-lg btn-primary pull-right" href="{{ route('ticket.add') }}" role="button">Tambah Tiket</a>
+                @else
+                    <button class="btn btn-lg btn-secondary pull-right" role="button">Tambah Tiket</button>
+                @endif
             </div>
             @if( Session::has('type_modal') && Session::has('message') )
                 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
@@ -42,7 +46,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($tickets as $index => $ticket)
+                        @foreach ($tickets->pribadi as $index => $ticket)
                         <tr>
                             <td><?php echo $index+1; ?></td>
                             <td><?php echo \Carbon\Carbon::parse($ticket->createdAt)->format("l, j F Y"); ?></td>
@@ -110,7 +114,7 @@
                             <td>
                                 <a href="{{ route('ticket.detail', ['id'=> $ticket->id]) }}" class="btn btn-primary">detail</a>
                                 @if ($ticket->status != 2)
-                                    <a href="{{ route('ticket.destroy', ['id'=> $ticket->id]) }}" class="btn btn-secondary">tutup tiket</a>        
+                                    <a href="{{ route('ticket.destroy', ['id'=> $ticket->id]) }}" class="btn btn-danger">tutup tiket</a>        
                                 @endif
                             </td>
                         </tr>

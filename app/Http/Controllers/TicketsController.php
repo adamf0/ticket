@@ -19,14 +19,25 @@ class TicketsController extends Controller
     }
     public function index(){
         if(Session::get('level_user')==1){
-            $datas = Tickets::with(['users','progress','pic_member'])->get();
+            $ticket = Tickets::with(['users','progress','pic_member','pic_member.users'])->where('id_user',Session::get('id_user'))->get();
+            $datas = (object) [
+                "pribadi"=>$ticket,
+                "total_waiting"=>$ticket->whereIn('status', [0,1])->count('status')
+            ]; 
         }
         else if(Session::get('level_user')==2){
-            $datas = Tickets::with(['users','progress','pic_member'])->where('status','1')->get();
+            $datas = (object) [
+                "tugas"=>Tickets::with(['users','progress','pic_member','pic_member.users'])->where('id_user_pic',Session::get('id_user'))->get(),
+                "pribadi"=>Tickets::with(['users','progress','pic_member','pic_member.users'])->where('id_user',Session::get('id_user'))->get()
+            ];
         }
         else{
-            $datas = Tickets::with(['Users','progress','pic_member'])->where('status','0')->get();
+            $datas = (object) [
+                "tugas"=>Tickets::with(['users','progress','pic_member','pic_member.users'])->get(),
+                "pribadi"=>Tickets::with(['users','progress','pic_member','pic_member.users'])->where('id_user',Session::get('id_user'))->get()
+            ];
         }
+        // dd($datas);
 
         return view('index',[
             "parentview"=>'ticket',

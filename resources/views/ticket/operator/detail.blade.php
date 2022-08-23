@@ -31,11 +31,11 @@
                             {{ $ticket->no_ticket }}
                         </b>
                             <?php
-                                if($ticket->type_ticket==1){
+                                if($ticket->type_ticket==0){
                                     echo "(Troubleshooting)";
                                 }
-                                else if($ticket->type_ticket==2){
-                                    echo "(Pengadaan Barang)";
+                                else if($ticket->type_ticket==1){
+                                    echo "(Permintaan Barang)";
                                 }
                                 else{
                                     echo "(Maintenance)";

@@ -14,4 +14,8 @@ class Users extends Model
     {
         return $this->belongsTo(Tickets::class,'id_user');
     }
+    public function pic_member()
+    {
+        return $this->belongsTo(PicMember::class,'id_user');
+    }
 }
