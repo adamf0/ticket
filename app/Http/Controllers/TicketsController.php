@@ -18,23 +18,139 @@ class TicketsController extends Controller
         // dd(Session::all());
     }
     public function index(){
+        // session(['level_user' => "1",'id_user'=>'SG.0728.2022']); //user
+        session(['level_user' => "2",'id_user'=>'SG.0612.2021']); //operator
+        // session(['level_user' => "3",'id_user'=>'SG.0156.2013']); //admin
+
+        $id_user = Session::get('id_user');
+
+        ///get all nik///
+        $a = Tickets::select('id_user')->groupBy('id_user')->get()->pluck('id_user')->toArray();
+        $b1 = Chats::select('to_user')->get()->pluck('to_user')->toArray();
+        $b2 = Chats::select('from_user')->get()->pluck('from_user')->toArray();       
+        $listNik = array_unique(array_merge($a,$b1,$b2));
+        $nik = '';
+        foreach($listNik as $key => $value){
+            if($key==count($listNik)-1){
+                $nik .= "'$value'";
+            }
+            else{
+                $nik .= "'$value',";
+            }
+        }
+        ///end get all nik///
+
+        ///get all user in///
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', 'https://cb.web.id/ggklikv2/api/getAllUserIn', ['form_params' => ['nik' => $nik]]);
+        $responseBody = json_decode($response->getBody());
+        
+        if($response->getStatusCode() != 200){
+            session(['type_modal' => 'fail', 'message' => 'Ada Masalah Padda server']);
+            return redirect()->route('ticket.index');
+        }
+        $listUser = collect($responseBody->listdata);
+        ///end get all user in///
+        
         if(Session::get('level_user')==1){
-            $ticket = Tickets::with(['users','progress','pic_member','pic_member.users'])->where('id_user',Session::get('id_user'))->get();
+            ///mapping ticket with data user from server///
+            $ticket = Tickets::with(['progress'])->where('id_user',Session::get('id_user'))->get();
+            $ticket->each(function ($t) use($listUser){
+                $user = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user) !== false;
+                })->values();
+                $userPic = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user_pic) !== false;
+                })->values();
+
+                unset($t->id_user);
+                $t->user = $user;
+                unset($t->id_user_pic);
+                $t->userPic = $userPic;
+            });
+            ///end mapping ticket with data user from server///
+
+            $pribadi = $ticket->filter(function($t) use ($id_user) {
+                if(count($t->user)==0){
+                    return true;
+               }
+               else{
+                    return stripos($t->user[0]->nik,$id_user) !== false;
+               }
+            })->values();
+            $total_waiting = count($ticket->whereIn('status', [0,1])->all());
+
             $datas = (object) [
-                "pribadi"=>$ticket,
-                "total_waiting"=>$ticket->whereIn('status', [0,1])->count('status')
+                "pribadi"=>$pribadi,
+                "total_waiting"=>$total_waiting
             ]; 
         }
         else if(Session::get('level_user')==2){
+            ///mapping ticket with data user from server///
+            $ticket = Tickets::with(['progress'])->get();
+            $ticket->each(function ($t) use($listUser){
+                $user = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user) !== false;
+                })->values();
+                $userPic = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user_pic) !== false;
+                })->values();
+
+                unset($t->id_user);
+                $t->user = $user;
+                unset($t->id_user_pic);
+                $t->userPic = $userPic;
+            });
+            ///end mapping ticket with data user from server///
+
+            $tugas = $ticket->filter(function($t) use ($id_user) {
+                if(count($t->userPic)==0){
+                     return true;
+                }
+                else{
+                    return stripos($t->userPic[0]->nik,$id_user) !== false;
+                }
+            })->values();
+            $pribadi = $ticket->filter(function($t) use ($id_user) {
+               if(count($t->user)==0){
+                    return true;
+               }
+               else{
+                    return stripos($t->user[0]->nik,$id_user) !== false;
+               }
+            })->values();
+
             $datas = (object) [
-                "tugas"=>Tickets::with(['users','progress','pic_member','pic_member.users'])->where('id_user_pic',Session::get('id_user'))->get(),
-                "pribadi"=>Tickets::with(['users','progress','pic_member','pic_member.users'])->where('id_user',Session::get('id_user'))->get()
+                "tugas"=>$tugas,
+                "pribadi"=>$pribadi
             ];
         }
         else{
+            ///mapping ticket with data user from server///
+            $ticket = Tickets::with(['progress'])->get();
+            $ticket->each(function ($t) use($listUser){
+                $user = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user) !== false;
+                })->values();
+                $userPic = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user_pic) !== false;
+                })->values();
+
+                unset($t->id_user);
+                $t->user = $user;
+                unset($t->id_user_pic);
+                $t->userPic = $userPic;
+            });
+            ///end mapping ticket with data user from server///
+
+            $tugas = $ticket;
+            $pribadi = $ticket->filter(function($t) use ($id_user) {
+                return stripos($t->user[0]->nik,$id_user) !== false;
+            })->values();
+
             $datas = (object) [
-                "tugas"=>Tickets::with(['users','progress','pic_member','pic_member.users'])->get(),
-                "pribadi"=>Tickets::with(['users','progress','pic_member','pic_member.users'])->where('id_user',Session::get('id_user'))->get()
+                "tugas"=>$tugas,
+                "pribadi"=>$pribadi
             ];
         }
         // dd($datas);
@@ -47,12 +163,87 @@ class TicketsController extends Controller
         ]);
     }
     public function detail($id){
+        // session(['level_user' => "1",'id_user'=>'SG.0728.2022']); //user
+        session(['level_user' => "2",'id_user'=>'SG.0612.2021']); //operator
+        // session(['level_user' => "3",'id_user'=>'SG.0156.2013']); //
+
+        ///get all nik///
+        $a = Tickets::select('id_user')->groupBy('id_user')->get()->pluck('id_user')->toArray();
+        $b1 = Chats::select('to_user')->get()->pluck('to_user')->toArray();
+        $b2 = Chats::select('from_user')->get()->pluck('from_user')->toArray();       
+        $listNik = array_unique(array_merge($a,$b1,$b2));
+        $nik = '';
+        foreach($listNik as $key => $value){
+            if($key==count($listNik)-1){
+                $nik .= "'$value'";
+            }
+            else{
+                $nik .= "'$value',";
+            }
+        }
+        ///end get all nik///
+        
+        ///get all user///
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', 'https://cb.web.id/ggklikv2/api/getAllUser', []);
+        $responseBody = json_decode($response->getBody());
+        
+        if($response->getStatusCode() != 200){
+            session(['type_modal' => 'fail', 'message' => 'Ada Masalah Padda server']);
+            return redirect()->route('ticket.index');
+        }
+        $users = collect($responseBody->listdata);
+        ///end get all user///
+        
+        ///get all user in///
+        $response = $client->request('POST', 'https://cb.web.id/ggklikv2/api/getAllUserIn', ['form_params' => ['nik' => $nik]]);
+        $responseBody = json_decode($response->getBody());
+        
+        if($response->getStatusCode() != 200){
+            session(['type_modal' => 'fail', 'message' => 'Ada Masalah Padda server']);
+            return redirect()->route('ticket.index');
+        }
+        $listUser = collect($responseBody->listdata);        
+        ///get all user in///
+
+        ///mapping ticket with data user from server///
+        $ticket = Tickets::with(['progress'])->findOrFail($id);
+        $user = $listUser->filter(function($u) use ($ticket) {
+            return stripos($u->nik,$ticket->id_user) !== false;
+        })->values();
+        $userPic = $listUser->filter(function($u) use ($ticket) {
+            return stripos($u->nik,$ticket->id_user_pic) !== false;
+        })->values();
+
+        unset($ticket->id_user);
+        $ticket->user = $user;
+        unset($ticket->id_user_pic);
+        $ticket->userPic = $userPic;
+        ///end mapping ticket with data user from server///
+
+        $chats = Chats::where('id_ticket',$id)->get();
+            $chats->each(function ($c) use($listUser){
+                $toUser = $listUser->filter(function($u) use ($c) {
+                    return stripos($u->nik,$c->to_user) !== false;
+                })->values();
+                $fromUser = $listUser->filter(function($u) use ($c) {
+                    return stripos($u->nik,$c->from_user) !== false;
+                })->values();
+
+                unset($c->id_user);
+                $c->to_user = $toUser;
+                unset($c->id_user_pic);
+                $c->from_user = $fromUser;
+            });
+        ///end mapping ticket with data user from server///
+        // dd($listUser,$ticket,$chats,$users);
+
         return view('index',[
             "parentview"=>'ticket',
             "subview"=>'detail',
-            "ticket"=>Tickets::with(['Users','progress','pic_member'])->findOrFail($id),
-            "chats"=>Chats::where('id_ticket',$id)->get(),
-            "users"=>Users::all()
+            "ticket"=>$ticket,
+            "chats"=>$chats,
+            // "users"=>$users
         ]);
     }
     public function add(){

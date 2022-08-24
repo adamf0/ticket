@@ -44,7 +44,7 @@
                         @foreach ($tickets->tugas as $index => $ticket)
                         <tr>
                             <td><?php echo $index+1; ?></td>
-                            <td><?php echo \Carbon\Carbon::parse($ticket->createdAt)->format("l, j F Y"); ?></td>
+                            <td><?php echo \Carbon\Carbon::parse($ticket->created_at)->format("l, j F Y"); ?></td>
                             <td>
                                 <?php echo $ticket->no_ticket; ?>
                                 <br>
@@ -85,7 +85,7 @@
                                 ?>
                             </td>
                             <td>
-                                <?php echo ($ticket->pic==null? "Belum ada PIC":$ticket->pic->nama); ?>
+                            <?php echo ( count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_karyawan); ?>
                             </td>
                             <td>
                                 <?php
@@ -145,7 +145,7 @@
                         @foreach ($tickets->pribadi as $index => $ticket)
                         <tr>
                             <td><?php echo $index+1; ?></td>
-                            <td><?php echo \Carbon\Carbon::parse($ticket->createdAt)->format("l, j F Y"); ?></td>
+                            <td><?php echo \Carbon\Carbon::parse($ticket->created_at)->format("l, j F Y"); ?></td>
                             <td>
                                 <?php echo $ticket->no_ticket; ?>
                                 <br>
@@ -186,7 +186,7 @@
                                 ?>
                             </td>
                             <td>
-                                <?php echo ($ticket->pic==null? "Belum ada PIC":$ticket->pic->nama); ?>
+                                <?php echo ( count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_karyawan); ?>
                             </td>
                             <td>
                                 <?php

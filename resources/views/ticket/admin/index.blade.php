@@ -51,7 +51,7 @@
                         @foreach ($tickets->tugas as $index => $ticket)
                         <tr>
                             <td><?php echo $index+1; ?></td>
-                            <td><?php echo \Carbon\Carbon::parse($ticket->createdAt)->format("l, j F Y"); ?></td>
+                            <td><?php echo \Carbon\Carbon::parse($ticket->created_at)->format("l, j F Y"); ?></td>
                             <td>
                                 <?php echo $ticket->no_ticket; ?>
                                 <br>
@@ -92,10 +92,10 @@
                                 ?>
                             </td>
                             <td>
-                                @if ($ticket->pic==null)
+                            @if (count($ticket->userPic)==0)
                                     <button type="button" class="btn btn-primary AddMember" data-url="{{ route('ticket.pic_member.create',['id'=>$ticket->id]) }}" data-bs-toggle="modal" data-bs-target=".modalPIC">Tambah PIC</button>
                                 @else
-                                    {{ $ticket->pic->nama }}
+                                    {{ $ticket->userPic[0]->nama_karyawan }}
                                 @endif
                             </td>
                             <td>
@@ -152,7 +152,7 @@
                         @foreach ($tickets->pribadi as $index => $ticket)
                         <tr>
                             <td><?php echo $index+1; ?></td>
-                            <td><?php echo \Carbon\Carbon::parse($ticket->createdAt)->format("l, j F Y"); ?></td>
+                            <td><?php echo \Carbon\Carbon::parse($ticket->created_at)->format("l, j F Y"); ?></td>
                             <td>
                                 <?php echo $ticket->no_ticket; ?>
                                 <br>
@@ -193,10 +193,10 @@
                                 ?>
                             </td>
                             <td>
-                                @if ($ticket->pic==null)
+                                @if (count($ticket->userPic)==0)
                                     <button type="button" class="btn btn-primary AddMember" data-url="{{ route('ticket.pic_member.create',['id'=>$ticket->id]) }}" data-bs-toggle="modal" data-bs-target=".modalPIC">Tambah PIC</button>
                                 @else
-                                    {{ $ticket->pic->nama }}
+                                    {{ $ticket->userPic[0]->nama_karyawan }}
                                 @endif
                             </td>
                             <td>
