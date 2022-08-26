@@ -18,6 +18,7 @@ class LoginController extends Controller
      
         $responseBody = (object) json_decode($response->getBody());
         // dd($responseBody);
+        
         if($response->getStatusCode() != 200){
             session(['type_modal' => 'fail', 'message' => 'gagal login']);
             return redirect()->route('login');
@@ -27,12 +28,12 @@ class LoginController extends Controller
             session(['level_user' => "3",'id_user'=>$responseBody->data->nik]);
         }
         else if($responseBody->data->divisi->id==4 && in_array($responseBody->data->level->id, [5,6,7])){
-            if($responseBody->data->nik = "SG.0728.2022"){
-                session(['level_user' => "1",'id_user'=>$responseBody->data->nik]);
-            }
-            else{
+            // if($responseBody->data->nik = "SG.0728.2022"){
+            //     session(['level_user' => "1",'id_user'=>$responseBody->data->nik]);
+            // }
+            // else{
                 session(['level_user' => "2",'id_user'=>$responseBody->data->nik]);
-            }
+            // }
         }
         else{
             session(['level_user' => "1",'id_user'=>$responseBody->data->nik]);

@@ -31,6 +31,13 @@
                 <h1>Tiket</h1>
                 <h5>(Tugas)</h5>
             </div>
+            <div class="col-2">
+                @if ($tickets->total_waiting<=3)
+                    <a class="btn btn-lg btn-primary pull-right" href="{{ route('ticket.add') }}" role="button">Tambah Tiket</a>
+                @else
+                    <button class="btn btn-lg btn-secondary pull-right" role="button">Tambah Tiket</button>
+                @endif
+            </div>
         </div>
         <div class="row">
             <div class="col-12">
@@ -146,6 +153,7 @@
                             <td>Foto</td>
                             <td>PIC</td>
                             <td>Status</td>
+                            <td>Aksi</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -193,11 +201,7 @@
                                 ?>
                             </td>
                             <td>
-                                @if (count($ticket->userPic)==0)
-                                    <button type="button" class="btn btn-primary AddMember" data-url="{{ route('ticket.pic_member.create',['id'=>$ticket->id]) }}" data-bs-toggle="modal" data-bs-target=".modalPIC">Tambah PIC</button>
-                                @else
-                                    {{ $ticket->userPic[0]->nama_karyawan }}
-                                @endif
+                                <?php echo ( count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_karyawan); ?>
                             </td>
                             <td>
                                 <?php
@@ -217,6 +221,12 @@
                                 <?php
                                     }
                                 ?>
+                            </td>
+                            <td>
+                                <a href="{{ route('ticket.detail', ['id'=> $ticket->id]) }}" class="btn btn-primary">detail</a>
+                                @if ($ticket->status != 2)
+                                    <a href="{{ route('ticket.destroy', ['id'=> $ticket->id]) }}" class="btn btn-danger">tutup tiket</a>        
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -242,7 +252,7 @@
                         <select name="pic" class="form-control MainPIC" required>
                             <option value="">-- Pilih PIC --</option>
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->nama }}</option>
+                                <option value="{{ $user->nik }}">{{ $user->nama_karyawan }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -251,7 +261,7 @@
                         <select name="pic_member[]" class="form-control MemberPIC" multiple>
                             <option value="">-- Pilih PIC Member --</option>
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->nama }}</option>
+                                <option value="{{ $user->nik }}">{{ $user->nama_karyawan }}</option>
                             @endforeach
                         </select>
                     </div>

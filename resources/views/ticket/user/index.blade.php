@@ -1,3 +1,21 @@
+@if( Session::has('type_modal') && Session::has('message') )
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header <?php echo (Session::get('type_modal')=="success" ? "bg-success":"bg-danger")?>">
+                <strong class="me-auto text-white">Notifikasi</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ Session::get('message') }}
+            </div>
+        </div>
+    </div>
+    @php
+        Session::forget('type_modal');
+        Session::forget('message');
+    @endphp
+@endif
+
 <div class="row">
     <div class="col-12 bg-light p-5 rounded">
         <div class="row">
@@ -11,23 +29,6 @@
                     <button class="btn btn-lg btn-secondary pull-right" role="button">Tambah Tiket</button>
                 @endif
             </div>
-            @if( Session::has('type_modal') && Session::has('message') )
-                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-                    <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header <?php echo (Session::get('type_modal')=="success" ? "bg-success":"bg-danger")?>">
-                            <strong class="me-auto text-white">Notifikasi</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                        <div class="toast-body">
-                            {{ Session::get('message') }}
-                        </div>
-                    </div>
-                </div>
-                @php
-                    Session::forget('type_modal');
-                    Session::forget('message');
-                @endphp
-            @endif
         </div>
         <div class="row">
             <div class="col-12">

@@ -1,5 +1,5 @@
 <?php
-
+//kurang tambah waktu chat
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -19,17 +19,19 @@ class TicketsController extends Controller
     }
     public function index(){
         // session(['level_user' => "1",'id_user'=>'SG.0728.2022']); //user
-        session(['level_user' => "2",'id_user'=>'SG.0612.2021']); //operator
+        // session(['level_user' => "2",'id_user'=>'SG.0612.2021']); //operator
         // session(['level_user' => "3",'id_user'=>'SG.0156.2013']); //admin
 
         $id_user = Session::get('id_user');
 
         ///get all nik///
-        $a = Tickets::select('id_user')->groupBy('id_user')->get()->pluck('id_user')->toArray();
+        $a1 = Tickets::select('id_user')->groupBy('id_user')->get()->pluck('id_user')->toArray();
+        $a2 = Tickets::select('id_user_pic')->groupBy('id_user_pic')->get()->pluck('id_user_pic')->toArray();
         $b1 = Chats::select('to_user')->get()->pluck('to_user')->toArray();
         $b2 = Chats::select('from_user')->get()->pluck('from_user')->toArray();       
-        $listNik = array_unique(array_merge($a,$b1,$b2));
+        $listNik = array_values(array_unique(array_merge($a1,$a2,$b1,$b2)));
         $nik = '';
+
         foreach($listNik as $key => $value){
             if($key==count($listNik)-1){
                 $nik .= "'$value'";
@@ -44,13 +46,25 @@ class TicketsController extends Controller
         $client = new \GuzzleHttp\Client();
         $response = $client->request('POST', 'https://cb.web.id/ggklikv2/api/getAllUserIn', ['form_params' => ['nik' => $nik]]);
         $responseBody = json_decode($response->getBody());
-        
+
         if($response->getStatusCode() != 200){
             session(['type_modal' => 'fail', 'message' => 'Ada Masalah Padda server']);
             return redirect()->route('ticket.index');
         }
         $listUser = collect($responseBody->listdata);
         ///end get all user in///
+
+        ///get all user///
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', 'https://cb.web.id/ggklikv2/api/getAllUser', []);
+        $responseBody = json_decode($response->getBody());
+        
+        if($response->getStatusCode() != 200){
+            session(['type_modal' => 'fail', 'message' => 'Ada Masalah Padda server']);
+            return redirect()->route('ticket.index');
+        }
+        $users = collect($responseBody->listdata);
+        ///end get all user///
         
         if(Session::get('level_user')==1){
             ///mapping ticket with data user from server///
@@ -88,6 +102,7 @@ class TicketsController extends Controller
         else if(Session::get('level_user')==2){
             ///mapping ticket with data user from server///
             $ticket = Tickets::with(['progress'])->get();
+
             $ticket->each(function ($t) use($listUser){
                 $user = $listUser->filter(function($u) use ($t) {
                     return stripos($u->nik,$t->id_user) !== false;
@@ -125,7 +140,7 @@ class TicketsController extends Controller
                 "pribadi"=>$pribadi
             ];
         }
-        else{
+        else{ 
             ///mapping ticket with data user from server///
             $ticket = Tickets::with(['progress'])->get();
             $ticket->each(function ($t) use($listUser){
@@ -147,10 +162,12 @@ class TicketsController extends Controller
             $pribadi = $ticket->filter(function($t) use ($id_user) {
                 return stripos($t->user[0]->nik,$id_user) !== false;
             })->values();
+            $total_waiting = count($pribadi->whereIn('status', [0,1])->all());
 
             $datas = (object) [
                 "tugas"=>$tugas,
-                "pribadi"=>$pribadi
+                "pribadi"=>$pribadi,
+                "total_waiting"=>$total_waiting
             ];
         }
         // dd($datas);
@@ -159,20 +176,22 @@ class TicketsController extends Controller
             "parentview"=>'ticket',
             "subview"=>'',
             "tickets"=>$datas,
-            "users"=>Users::all()
+            "users"=>$users
         ]);
     }
     public function detail($id){
         // session(['level_user' => "1",'id_user'=>'SG.0728.2022']); //user
-        session(['level_user' => "2",'id_user'=>'SG.0612.2021']); //operator
+        // session(['level_user' => "2",'id_user'=>'SG.0612.2021']); //operator
         // session(['level_user' => "3",'id_user'=>'SG.0156.2013']); //
 
         ///get all nik///
-        $a = Tickets::select('id_user')->groupBy('id_user')->get()->pluck('id_user')->toArray();
+        $a1 = Tickets::select('id_user')->groupBy('id_user')->get()->pluck('id_user')->toArray();
+        $a2 = Tickets::select('id_user_pic')->groupBy('id_user_pic')->get()->pluck('id_user_pic')->toArray();
         $b1 = Chats::select('to_user')->get()->pluck('to_user')->toArray();
         $b2 = Chats::select('from_user')->get()->pluck('from_user')->toArray();       
-        $listNik = array_unique(array_merge($a,$b1,$b2));
+        $listNik = array_values(array_unique(array_merge($a1,$a2,$b1,$b2)));
         $nik = '';
+        
         foreach($listNik as $key => $value){
             if($key==count($listNik)-1){
                 $nik .= "'$value'";
