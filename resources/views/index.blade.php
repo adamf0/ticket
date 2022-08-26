@@ -15,7 +15,7 @@
         @elseif( Session::get('level_user')==2 )
             @include('ticket.operator.detail')
         @else
-            @include('ticket.user.detail')
+            @include('ticket.admin.detail')
         @endif    
     @elseif ($parentview=='ticket' && $subview=='create')
         @include('ticket.create')

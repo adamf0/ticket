@@ -52,6 +52,7 @@
                             <td>Foto</td>
                             <td>PIC</td>
                             <td>Status</td>
+                            <td>Aksi</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,6 +124,18 @@
                                 <?php
                                     }
                                 ?>
+                            </td>
+                            <td>
+                                @if (
+                                    ($ticket->user[0]->divisi->id==4 && in_array($ticket->user[0]->level->id, [1,2,3,4])) &&
+                                    ($ticket->userPic[0]->divisi->id==4 && in_array($ticket->userPic[0]->level->id, [1,2,3,4])) &&
+                                    $ticket->user[0]->nik != Session::get('id_user')
+                                )
+                                    <a href="{{ route('ticket.detail', ['id'=> $ticket->id]) }}" class="btn btn-primary">detail</a>
+                                    @if ($ticket->status != 2)
+                                        <a href="{{ route('ticket.destroy', ['id'=> $ticket->id]) }}" class="btn btn-danger">tutup tiket</a>        
+                                    @endif
+                                @endif
                             </td>
                         </tr>
                         @endforeach

@@ -209,6 +209,9 @@
                             </td>
                             <td>
                                 <a href="{{ route('ticket.detail', ['id'=> $ticket->id]) }}" class="btn btn-primary">detail</a>
+                                @if ($ticket->status != 2)
+                                    <a href="{{ route('ticket.destroy', ['id'=> $ticket->id]) }}" class="btn btn-danger">tutup tiket</a>        
+                                @endif
                             </td>                           
                         </tr>
                         @endforeach
