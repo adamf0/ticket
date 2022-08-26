@@ -19,7 +19,7 @@ class LoginController extends Controller
         $responseBody = (object) json_decode($response->getBody());
         // dd($responseBody);
         
-        if($response->getStatusCode() != 200){
+        if($response->getStatusCode() != 200 || $responseBody->status=="fail"){
             session(['type_modal' => 'fail', 'message' => 'gagal login']);
             return redirect()->route('login');
         }
