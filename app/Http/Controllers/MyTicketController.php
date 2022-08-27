@@ -62,7 +62,7 @@ class MyTicketController extends Controller
         $users = collect($responseBody->listdata);
         ///end get all user///
         
-        // if(Session::get('level_user')==1){
+        if(Session::get('level_user')==1){
             ///mapping ticket with data user from server///
             $ticket = Tickets::with(['progress'])->where('id_user',Session::get('id_user'))->get();
             $ticket->each(function ($t) use($listUser){
@@ -91,81 +91,82 @@ class MyTicketController extends Controller
             $total_waiting = count($ticket->whereIn('status', [0,1])->all());
 
             $datas = (object) [
-                "aktif"=>$datas,
+                "pribadi"=>$datas,
                 "total_waiting"=>$total_waiting
             ]; 
-        // }
-        // else if(Session::get('level_user')==2){
-        //     ///mapping ticket with data user from server///
-        //     $ticket = Tickets::with(['progress'])->get();
+        }
+        else if(Session::get('level_user')==2){
+            ///mapping ticket with data user from server///
+            $ticket = Tickets::with(['progress'])->get();
 
-        //     $ticket->each(function ($t) use($listUser){
-        //         $user = $listUser->filter(function($u) use ($t) {
-        //             return stripos($u->nik,$t->id_user) !== false;
-        //         })->values();
-        //         $userPic = $listUser->filter(function($u) use ($t) {
-        //             return stripos($u->nik,$t->id_user_pic) !== false;
-        //         })->values();
+            $ticket->each(function ($t) use($listUser){
+                $user = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user) !== false;
+                })->values();
+                $userPic = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user_pic) !== false;
+                })->values();
 
-        //         unset($t->id_user);
-        //         $t->user = $user;
-        //         unset($t->id_user_pic);
-        //         $t->userPic = $userPic;
-        //     });
-        //     ///end mapping ticket with data user from server///
+                unset($t->id_user);
+                $t->user = $user;
+                unset($t->id_user_pic);
+                $t->userPic = $userPic;
+            });
+            ///end mapping ticket with data user from server///
 
-        //     $tugas = $ticket->filter(function($t) use ($id_user) {
-        //         if(count($t->userPic)==0){
-        //              return true;
-        //         }
-        //         else{
-        //             return stripos($t->userPic[0]->nik,$id_user) !== false;
-        //         }
-        //     })->values();
-        //     $pribadi = $ticket->filter(function($t) use ($id_user) {
-        //        if(count($t->user)==0){
-        //             return true;
-        //        }
-        //        else{
-        //             return stripos($t->user[0]->nik,$id_user) !== false;
-        //        }
-        //     })->values();
+            $tugas = $ticket->filter(function($t) use ($id_user) {
+                if(count($t->userPic)==0){
+                     return true;
+                }
+                else{
+                    return stripos($t->userPic[0]->nik,$id_user) !== false;
+                }
+            })->values();
+            $pribadi = $ticket->filter(function($t) use ($id_user) {
+               if(count($t->user)==0){
+                    return true;
+               }
+               else{
+                    return stripos($t->user[0]->nik,$id_user) !== false;
+               }
+            })->values();
 
-        //     $datas = (object) [
-        //         "tugas"=>$tugas,
-        //         "pribadi"=>$pribadi
-        //     ];
-        // }
-        // else{ 
-        //     ///mapping ticket with data user from server///
-        //     $ticket = Tickets::with(['progress'])->get();
-        //     $ticket->each(function ($t) use($listUser){
-        //         $user = $listUser->filter(function($u) use ($t) {
-        //             return stripos($u->nik,$t->id_user) !== false;
-        //         })->values();
-        //         $userPic = $listUser->filter(function($u) use ($t) {
-        //             return stripos($u->nik,$t->id_user_pic) !== false;
-        //         })->values();
+            $datas = (object) [
+                "tugas"=>$tugas,
+                "pribadi"=>$pribadi,
+                "total_waiting"=>-1
+            ];
+        }
+        else{ 
+            ///mapping ticket with data user from server///
+            $ticket = Tickets::with(['progress'])->get();
+            $ticket->each(function ($t) use($listUser){
+                $user = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user) !== false;
+                })->values();
+                $userPic = $listUser->filter(function($u) use ($t) {
+                    return stripos($u->nik,$t->id_user_pic) !== false;
+                })->values();
 
-        //         unset($t->id_user);
-        //         $t->user = $user;
-        //         unset($t->id_user_pic);
-        //         $t->userPic = $userPic;
-        //     });
-        //     ///end mapping ticket with data user from server///
+                unset($t->id_user);
+                $t->user = $user;
+                unset($t->id_user_pic);
+                $t->userPic = $userPic;
+            });
+            ///end mapping ticket with data user from server///
 
-        //     $tugas = $ticket;
-        //     $pribadi = $ticket->filter(function($t) use ($id_user) {
-        //         return stripos($t->user[0]->nik,$id_user) !== false;
-        //     })->values();
-        //     $total_waiting = count($pribadi->whereIn('status', [0,1])->all());
+            $tugas = $ticket;
+            $pribadi = $ticket->filter(function($t) use ($id_user) {
+                return stripos($t->user[0]->nik,$id_user) !== false;
+            })->values();
+            $total_waiting = count($pribadi->whereIn('status', [0,1])->all());
 
-        //     $datas = (object) [
-        //         "tugas"=>$tugas,
-        //         "pribadi"=>$pribadi,
-        //         "total_waiting"=>$total_waiting
-        //     ];
-        // }
+            $datas = (object) [
+                "tugas"=>$tugas,
+                "pribadi"=>$pribadi,
+                "total_waiting"=>$total_waiting
+            ];
+        }
         // dd($datas);
 
         return view('index',[

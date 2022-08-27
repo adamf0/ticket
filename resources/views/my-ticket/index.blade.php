@@ -7,7 +7,7 @@
                         </div>
                         <div class="col-6">
                             <a href="
-                            @if ($tickets->total_waiting<=3)
+                            @if ($tickets->total_waiting !=-1 && $tickets->total_waiting <= 3)
                                 {{ route('form-ticket.index',['type'=>'troubleshooting']) }}
                             @else
                                 #
@@ -28,11 +28,11 @@
                                     <th scope="col">Foto</th>
                                     <th scope="col">PIC</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Aksi</th> 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tickets->aktif as $index => $ticket)
+                                @foreach ($tickets->pribadi as $index => $ticket)
                                     <?php
                                         $no_ticket = $ticket->no_ticket;
                                         $created_at = $ticket->created_at->format("l, j F Y");
