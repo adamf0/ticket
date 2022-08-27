@@ -1,0 +1,124 @@
+body{
+    background-color: #F5F5F5;
+}
+
+.brd{
+    background-color:#F9F5F3;
+}
+
+.brd > th{
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.brd > th:first-child{
+    background:#F9F5F3;
+    border-radius:8px 0px 0px 8px;
+}
+.brd > th:last-child{
+    background:#F9F5F3;
+    border-radius:0px 8px 8px 0px;
+}
+tbody{
+    border-top:3px solid #fff;
+}
+.card.card-login{
+    border: 0px solid white;
+    border-radius: 8px;
+    background-color: #ffffff55;
+}
+
+.card.card-round{
+    border: 0px solid white;
+    border-radius: 8px;
+}
+
+.card.card-red{
+    background: #F26F5B;
+    color: white;
+    border: 0px solid white;
+    border-radius: 8px;
+}
+
+.card.card-blue{
+    background: #75D9E7;
+    color: white;
+    border: 0px solid white;
+    border-radius: 8px;
+}
+
+.card.card-navy{
+    background: #3C95F2;
+    color: white;
+    border: 0px solid white;
+    border-radius: 8px;
+}
+
+.image-login{
+    background-image: url("assets/illustration-login.png");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-custom{
+    border: 1px solid #fff;
+    background-color: transparent;
+}
+
+.btn-red{
+    background-color: #EF3E2A;
+    color: white;
+}
+
+.btn-red:hover{
+    background-color: #f52710;
+    color: white;
+}
+
+
+
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    margin: 16px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.25s;
+  }
+
+  .sidebar .container{
+    border-radius: 8px;
+    height: 100%;
+    background-color: white;
+  }
+
+  .sidebar a {
+    text-decoration: none;
+    font-size: 16px;
+    color: black;
+    display: flex;
+    transition: 0.3s;
+    padding: 8px;
+    margin-top: 16px;
+    border-radius: 4px;
+  }
+
+  .sidebar a:hover {
+    background-color: #ef3e2a3f;
+  }
+
+  .sidebar a:active {
+    background-color: #ef3e2a3f;
+  }
+
+
+  #main {
+    transition: margin-left .25s;
+    padding: 16px 16px 16px 32px;
+  }

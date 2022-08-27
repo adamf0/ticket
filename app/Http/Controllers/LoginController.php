@@ -40,7 +40,7 @@ class LoginController extends Controller
         }
         
         session(['type_modal' => 'success', 'message' => 'berhasil login']);
-        return redirect()->route('ticket.index');
+        return redirect()->route('dashboard.index');
     }
     public function logout(){
         Session::forget('level_user');
