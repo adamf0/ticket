@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <link rel="stylesheet" href="custom.css" />
+
+        <title>Hello, world!</title>
+    </head>
+    <body>
+        <div id="mySidebar" class="sidebar">
+            <div class="container">
+                <h4 class="text-center pt-4 pb-3">HelpDesk IT</h4>
+                <hr />
+                <a href="#"
+                    ><i class="material-icons">dashboard</i>&nbsp;Dashboard</a
+                >
+                <a href="#"
+                    ><i class="material-icons">confirmation_number</i>&nbsp;My
+                    Tiket</a
+                >
+                <a href="#"
+                    ><i class="material-icons">troubleshoot</i
+                    >&nbsp;Troubleshoot</a
+                >
+                <a href="#"
+                    ><i class="material-icons">add_shopping_cart</i
+                    >&nbsp;Pengadaan Barang</a
+                >
+                <a href="#"
+                    ><i class="material-icons">engineering</i
+                    >&nbsp;Maintenance</a
+                >
+                <a href="#"
+                    ><i class="material-icons">group_add</i
+                    >&nbsp;Request Personel</a
+                >
+                <a href="#"><i class="material-icons">logout</i>&nbsp;Logout</a>
+            </div>
+        </div>
+
+        <!-- main content page -->
+
+        <div id="main">
+            <div class="card card-round p-2 mb-4">
+                <div class="card-body">
+                    <div class="row d-flex my-auto">
+                        <div class="col-1">
+                            <button onclick="openNav()" class="btn btn-light"
+                                ><i class="material-icons">menu</i></button
+                            >
+                        </div>
+                        <div class="col-3">
+                            <img src="assets/illus1.png" alt="">
+                        </div>
+                        <div class="col-8">
+                            <h3><strong>Selamat Datang di</strong></h3>
+                            <h3><strong>Aplikasi Help Desk IT</strong></h3>
+                            <p class="pt-3" style="font-size: 18px;">
+                                Aplikasi pelayanan untuk mempermudah dalam
+                                penanganan troubleshooting,<br>pengadaan barang dan
+                                maintenance
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail -->
+            <div class="card card-round mb-4">
+                <div class="card-body mx-2 mb-4">
+
+                    <h4 class="py-4"><strong>Detail</strong></h4>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img class="img-round" src="assets/dummyimg.png" alt="">
+                                </div>
+                                <div class="col-2">
+                                    <p class="title">Tiket :</p>
+                                    <p class="title">Tanggal :</p>
+                                    <p class="title">Judul :</p>
+                                    <p class="title">Deskripsi :</p>
+                                    <p class="title">Status :</p>
+                                    <p class="title">Label :</p>
+                                    <p class="title">PIC :</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="isi">Tiket :</p>
+                                    <p class="isi">Tanggal :</p>
+                                    <p class="isi">Judul :</p>
+                                    <p class="isi">Deskripsi :</p>
+                                    <p class="isi">Status :</p>
+                                    <p class="isi">Label :</p>
+                                    <p class="isi">PIC :</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Perkembangan Tugas -->
+            <div class="card card-round mb-4">
+                <div class="card-body mx-2 mb-4">
+
+                    <h4 class="py-4"><strong>Perkembangan Tugas</strong></h4>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="">
+                                <label for="" class="form-label">Perkembangan Terakhir</label>
+                                <input type="text" class="form-control" id="" aria-describedby="perkembanganHelp">
+                                <div id="perkembanganHelp" class="form-text">Keterangan perkembangan tiket.</div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Pesan -->
+            <div class="card card-round mb-4">
+                <div class="card-body mx-2 mb-4">
+
+                    <h4 class="py-4"><strong>Pesan</strong></h4>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="">
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label for="" class="form-label">Pesan</label>
+                                        <input type="text" class="form-control" id="" aria-describedby="">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="formFile" class="form-label">Attachment</label>
+                                        <input class="form-control" type="file" id="formFile">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Percakapan -->
+            <div class="card card-round mb-4">
+                <div class="card-body mx-2 mb-4">
+
+                    <h4 class="py-4"><strong>Percakapan</strong></h4>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="pesanmasuk">
+                                <p class="title-pesan"><i class="material-icons">account_circle</i>&nbsp;&nbsp;Aprea Kosasih</p>
+                                <p class="isi-pesan">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aliquam ipsa illum dolorum quae nihil perferendis sit nam dolor qui. Adipisci quod aliquam facere debitis doloremque accusantium quisquam eius? Ipsam.</p>
+                                <p class="waktu-pesan">12:00</p>
+                            </div>
+                            <div class="pesansaya">
+                                <p class="title-pesan">Adam Furqon&nbsp;&nbsp;<i class="material-icons">account_circle</i></p>
+                                <p class="isi-pesan">Lorem ipsum dolor,assumenda.</p>
+                                <p class="waktu-pesan">13:00</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openNav() {
+                if(document.getElementById("mySidebar").style.width == "300px"){
+                    document.getElementById("mySidebar").style.width = "0";
+                }else{
+                    document.getElementById("mySidebar").style.width = "300px";
+                }
+                if(document.getElementById("main").style.marginLeft == "300px"){
+                    document.getElementById("main").style.marginLeft = "0"
+                }else{
+                    document.getElementById("main").style.marginLeft = "300px"
+                }
+            }
+        </script>
+    </body>
+</html>

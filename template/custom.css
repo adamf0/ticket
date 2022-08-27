@@ -122,3 +122,71 @@ tbody{
     transition: margin-left .25s;
     padding: 16px 16px 16px 32px;
   }
+
+  .img-round{
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.349);
+  }
+
+  p.isi{
+    border-radius: 4px;
+    padding: 4px;
+    background-color: #F9F9F9;
+  }
+
+  p.title{
+    padding: 4px;
+    font-weight: bold;
+  }
+
+.pesanmasuk > p.title-pesan{
+    display: flex;
+    font-weight: bold;
+}
+
+.pesanmasuk > p.isi-pesan{
+    display: inline-flex;
+    padding: 8px;
+    margin-right: auto;
+    max-width: 50%;
+    border-radius: 8px 0px 8px 0px;
+    background-color: #dddddd;
+    font-weight: 600;
+}
+
+.pesanmasuk > p.waktu-pesan{
+    margin-right: auto;
+    font-size: 12px;
+    color: grey;
+}
+
+.pesansaya{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.pesansaya > p.title-pesan{
+    display: flex;
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.pesansaya > p.isi-pesan{
+    display: inline-flex;
+    padding: 8px;
+    max-width: 50%;
+    margin-left: auto;
+    border-radius: 0px 8px 0px 8px;
+    background-color: #3C95F2;
+    color: white;
+    font-weight: 600;
+}
+
+.pesansaya > p.waktu-pesan{
+    margin-left: auto;
+    font-size: 12px;
+    color: grey;
+}
