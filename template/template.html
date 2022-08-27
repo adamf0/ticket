@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <link rel="stylesheet" href="custom.css" />
+
+        <title>Hello, world!</title>
+    </head>
+    <body>
+        <div id="mySidebar" class="sidebar">
+            <div class="container">
+                <h4 class="text-center pt-4 pb-3">HelpDesk IT</h4>
+                <hr />
+                <a href="#"
+                    ><i class="material-icons">dashboard</i>&nbsp;Dashboard</a
+                >
+                <a href="#"
+                    ><i class="material-icons">confirmation_number</i>&nbsp;My
+                    Tiket</a
+                >
+                <a href="#"
+                    ><i class="material-icons">troubleshoot</i
+                    >&nbsp;Troubleshoot</a
+                >
+                <a href="#"
+                    ><i class="material-icons">add_shopping_cart</i
+                    >&nbsp;Pengadaan Barang</a
+                >
+                <a href="#"
+                    ><i class="material-icons">engineering</i
+                    >&nbsp;Maintenance</a
+                >
+                <a href="#"
+                    ><i class="material-icons">group_add</i
+                    >&nbsp;Request Personel</a
+                >
+                <a href="#"><i class="material-icons">logout</i>&nbsp;Logout</a>
+            </div>
+        </div>
+
+        <!-- main content page -->
+
+        <div id="main">
+            <div class="card card-round p-2 mb-4">
+                <div class="card-body">
+                    <div class="row d-flex my-auto">
+                        <div class="col-1">
+                            <button onclick="openNav()" class="btn btn-light"
+                                ><i class="material-icons">menu</i></button
+                            >
+                        </div>
+                        <div class="col-3">
+                            <img src="assets/illus1.png" alt="">
+                        </div>
+                        <div class="col-8">
+                            <h3><strong>Selamat Datang di</strong></h3>
+                            <h3><strong>Aplikasi Help Desk IT</strong></h3>
+                            <p class="pt-3" style="font-size: 18px;">
+                                Aplikasi pelayanan untuk mempermudah dalam
+                                penanganan troubleshooting,<br>pengadaan barang dan
+                                maintenance
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tiket Aktif -->
+            <div class="card card-round mb-4">
+                <div class="card-body mx-2">
+
+                    <div class="row my-4">
+                        <div class="col-4">
+                            <div class="card card-red h-100">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h5>Buat Tiket,<br>Troubleshooting</h5>
+                                            <button class="btn btn-warning">Buat Tiket</button>
+                                        </div>
+                                        <div class="col-4">
+                                            <img src="assets/ic1.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card card-blue h-100">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h5>Buat Tiket,<br>Pengadaan Barang</h5>
+                                            <button class="btn btn-warning">Buat Tiket</button>
+                                        </div>
+                                        <div class="col-4">
+                                            <img src="assets/ic2.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card card-navy h-100">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h5>Buat Tiket,<br>Mainteance</h5>
+                                            <button class="btn btn-warning">Buat Tiket</button>
+                                        </div>
+                                        <div class="col-4">
+                                            <img src="assets/ic3.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="py-4"><strong>Tiket Aktif</strong></h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="brd text-center">
+                                    <th scope="col">No</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Nomor Tiket</th>
+                                    <th scope="col">label</th>
+                                    <th scope="col">Judul</th>
+                                    <th scope="col">Deskripsi</th>
+                                    <th scope="col">Foto</th>
+                                    <th scope="col">PIC</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Senin, 22 Jul 2022</td>
+                                    <td>098823763</td>
+                                    <td>Butuh Cepat</td>
+                                    <td>Server Down</td>
+                                    <td>Cek Server CB</td>
+                                    <td>image.png</td>
+                                    <td>Danil</td>
+                                    <td>Memulai Sesi</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Senin, 22 Jul 2022</td>
+                                    <td>098823763</td>
+                                    <td>Butuh Cepat</td>
+                                    <td>Server Down</td>
+                                    <td>Cek Server CB</td>
+                                    <td>image.png</td>
+                                    <td>Danil</td>
+                                    <td>Memulai Sesi</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Senin, 22 Jul 2022</td>
+                                    <td>098823763</td>
+                                    <td>Butuh Cepat</td>
+                                    <td>Server Down</td>
+                                    <td>Cek Server CB</td>
+                                    <td>image.png</td>
+                                    <td>Danil</td>
+                                    <td>Memulai Sesi</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Tiket -->
+
+            <div class="card card-round p-2 mb-4">
+                <div class="card-body">
+                    <h4 class="py-4"><strong>My Tiket</strong></h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="brd text-center">
+                                    <th scope="col">No</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Nomor Tiket</th>
+                                    <th scope="col">label</th>
+                                    <th scope="col">Judul</th>
+                                    <th scope="col">Deskripsi</th>
+                                    <th scope="col">Foto</th>
+                                    <th scope="col">PIC</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Senin, 22 Jul 2022</td>
+                                    <td>098823763</td>
+                                    <td>Butuh Cepat</td>
+                                    <td>Server Down</td>
+                                    <td>Cek Server CB</td>
+                                    <td>image.png</td>
+                                    <td>Danil</td>
+                                    <td>Memulai Sesi</td>
+                                    <td>
+                                        <a
+                                            class="btn btn-sm btn-primary"
+                                            href=""
+                                            >Detail</a
+                                        ><a
+                                            class="btn btn-sm btn-danger"
+                                            href=""
+                                            >Tutup</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Senin, 22 Jul 2022</td>
+                                    <td>098823763</td>
+                                    <td>Butuh Cepat</td>
+                                    <td>Server Down</td>
+                                    <td>Cek Server CB</td>
+                                    <td>image.png</td>
+                                    <td>Danil</td>
+                                    <td>Memulai Sesi</td>
+                                    <td>
+                                        <a
+                                            class="btn btn-sm btn-primary"
+                                            href=""
+                                            >Detail</a
+                                        ><a
+                                            class="btn btn-sm btn-danger"
+                                            href=""
+                                            >Tutup</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Senin, 22 Jul 2022</td>
+                                    <td>098823763</td>
+                                    <td>Butuh Cepat</td>
+                                    <td>Server Down</td>
+                                    <td>Cek Server CB</td>
+                                    <td>image.png</td>
+                                    <td>Danil</td>
+                                    <td>Memulai Sesi</td>
+                                    <td>
+                                        <a
+                                            class="btn btn-sm btn-primary"
+                                            href=""
+                                            >Detail</a
+                                        ><a
+                                            class="btn btn-sm btn-danger"
+                                            href=""
+                                            >Tutup</a
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tiket Troubleshooting -->
+
+            <div class="card card-round mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"
+                                >Tipe Tiket</label
+                            >
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="exampleInputEmail1"
+                                aria-describedby="emailHelp"
+                            />
+                        </div>
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"
+                                >Label</label
+                            >
+                            <select class="form-select">
+                                <option>Pilih Label</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"
+                                >Judul</label
+                            >
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="exampleInputEmail1"
+                                aria-describedby="emailHelp"
+                            />
+                        </div>
+                        <div class="col-6">
+                            <label for="formFile" class="form-label"
+                                >Default file input example</label
+                            >
+                            <input
+                                class="form-control"
+                                type="file"
+                                id="formFile"
+                            />
+                        </div>
+                        <div class="col-12">
+                            <label
+                                for="exampleFormControlTextarea1"
+                                class="form-label"
+                                >Example textarea</label
+                            >
+                            <textarea
+                                style="resize: none"
+                                class="form-control"
+                                id="exampleFormControlTextarea1"
+                                rows="5"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <a
+                        style="float: right"
+                        class="btn btn-primary mt-4 w-25"
+                        href=""
+                        >Submit</a
+                    >
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openNav() {
+                if(document.getElementById("mySidebar").style.width == "300px"){
+                    document.getElementById("mySidebar").style.width = "0";
+                }else{
+                    document.getElementById("mySidebar").style.width = "300px";
+                }
+                if(document.getElementById("main").style.marginLeft == "300px"){
+                    document.getElementById("main").style.marginLeft = "0"
+                }else{
+                    document.getElementById("main").style.marginLeft = "300px"
+                }
+            }
+        </script>
+    </body>
+</html>
