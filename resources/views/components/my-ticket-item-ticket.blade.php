@@ -1,11 +1,11 @@
 <tr>
     <td>{{ $index }}</td>
     <td>{{ $created_at }}</td>
-    <td>{{ $no_ticket }}</td>
+    <td>{{ $nomor_ticket }}</td>
     <td>
-        @if ($label==0)
+        @if ($label=='0')
             <span class="badge bg-secondary">Tidak Butuh Cepat</span>
-        @elseif ($label==1)
+        @elseif ($label=='1')
             <span class="badge bg-success">Biasa</span>
         @else
             <span class="badge bg-danger">Butuh Cepat</span>
@@ -20,11 +20,21 @@
             {{ $foto }}
         @endif
     </td>
-    <td>{{ $userPic }}</td>
     <td>
-        @if ($label==0)
+        @if( Session::get('level_user')==3 )
+            @if ($userPic=="Belum ada PIC")
+                <button type="button" class="btn btn-primary AddMember" data-url="{{ route('pic-member.create',['id'=>$id]) }}" data-bs-toggle="modal" data-bs-target=".modalPIC">Tambah PIC</button>
+            @else
+                {{ $userPic }}
+            @endif
+        @else
+            {{ $userPic }}
+        @endif
+    </td>
+    <td>
+        @if ($status=='0')
             <span class="badge bg-warning">Menunggu Sesi</span>
-        @elseif ($label==1)
+        @elseif ($status=='1')
             <span class="badge bg-success">Memulai Sesi</span>
         @else
             <span class="badge bg-danger">Menutup Sesi</span> <!-- error -->

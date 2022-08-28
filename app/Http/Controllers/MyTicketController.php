@@ -116,7 +116,7 @@ class MyTicketController extends Controller
 
             $tugas = $ticket->filter(function($t) use ($id_user) {
                 if(count($t->userPic)==0){
-                     return true;
+                     return false;
                 }
                 else{
                     return stripos($t->userPic[0]->nik,$id_user) !== false;
@@ -130,11 +130,12 @@ class MyTicketController extends Controller
                     return stripos($t->user[0]->nik,$id_user) !== false;
                }
             })->values();
+            $total_waiting = count($pribadi->whereIn('status', [0,1])->all());
 
             $datas = (object) [
                 "tugas"=>$tugas,
                 "pribadi"=>$pribadi,
-                "total_waiting"=>-1
+                "total_waiting"=>$total_waiting
             ];
         }
         else{ 
@@ -173,6 +174,7 @@ class MyTicketController extends Controller
             "parentview"=>"my-ticket",
             "subview"=>"",
             "tickets"=>$datas,
+            "users"=>$users
         ]);
         // return view('template');
     }

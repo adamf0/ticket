@@ -10,5 +10,8 @@
     @elseif ($parentview=='form-ticket' && $subview=='')
         @include('form-ticket.index')
 
+    @elseif ($parentview=='detail' && $subview=='')
+        @include('detail.index')
+
     @endif
 @endsection

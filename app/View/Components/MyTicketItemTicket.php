@@ -8,21 +8,23 @@ class MyTicketItemTicket extends Component
 {
     public $index = 0;
     public $id = null;
-    public $created_at = "0000-00-00";
-    public $no_ticket = '';
-    public $label = 0;
+    public $created_at = "0000-00-00"; //error
+    public $nomor_ticket = ''; //error
+    public $label = '0';
     public $judul = '';
     public $deskripsi = '';
     public $foto = '';
     public $userPic = '';
-    public $status = 0;
+    public $status = '0';
 
-    public function __construct($index=0,$id=null,$created_at="0000-00-00",$no_ticket='',$label=0,$judul='',$deskripsi='',$foto='',$userPic='',$status=0)
+    public function __construct($index=0,$id=null,$created_at="0000-00-00",$nomor_ticket='',$label='0',$judul='',$deskripsi='',$foto='',$userPic='',$status='0')
     {
+        // dd($nomor_ticket);
+
         $this->index = $index;
         $this->id = $id;
         $this->created_at = $created_at;
-        $this->no_ticket = $no_ticket;
+        $this->nomor_ticket = $nomor_ticket;
         $this->label = $label;
         $this->judul = $judul;
         $this->deskripsi = $deskripsi;
@@ -38,10 +40,11 @@ class MyTicketItemTicket extends Component
      */
     public function render()
     {
+        // if($this->index==1) dd($this);
         return view('components.my-ticket-item-ticket',[
             "index" => $this->index,
             "id"=>$this->id,
-            "no_ticket" => $this->no_ticket,
+            "nomor_ticket" => $this->nomor_ticket,
             "label" => $this->label,
             "judul" => $this->judul,
             "deskripsi" => $this->deskripsi,
