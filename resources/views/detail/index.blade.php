@@ -28,8 +28,10 @@
                                     (Troubleshooting)
                                 @elseif ($ticket->type_ticket==1)
                                     (Permintaan Barang)
-                                @else
+                                @elseif ($ticket->type_ticket==2)
                                     (Maintenance)
+                                @else
+                                    (Request Personil)
                                 @endif
                             </p>
                             <p class="isi">{{ \Carbon\Carbon::parse($ticket->created_at)->format("l, j F Y") }}</p>
@@ -59,6 +61,16 @@
                                 @else
                                     {{ $ticket->userPic[0]->nama_karyawan }}
                                 @endif
+
+                                @if (count($ticket->pic_member)>0)
+                                    <ul>
+                                        @foreach ($ticket->pic_member as $member)
+                                            @if (count($member->user)>0)
+                                                <li>{{ $member->user[0]->nama_karyawan }}</li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </p>
                         </div>
                     </div>
@@ -68,7 +80,7 @@
         </div>
     </div>
 
-    @if (Session::get('level_user')=='2')
+    @if (Session::get('level_user')=='3' || Session::get('level_user')=='2')
     <!-- Perkembangan Tugas -->
     <div class="card card-round mb-4">
         <div class="card-body mx-2 mb-4">
@@ -177,7 +189,7 @@
                                         </p>
                                 @endif
                                         <p class="isi-pesan">{{ $chat->deskripsi }}</p>
-                                        <p class="waktu-pesan">{{ \Carbon\Carbon::parse($chat->created_at)->format("l, j F Y") }}</p>
+                                        <p class="waktu-pesan">{{ \Carbon\Carbon::parse($chat->created_at)->format("j F Y H:i") }}</p>
                                     </div>
                         @endforeach
                     @endif

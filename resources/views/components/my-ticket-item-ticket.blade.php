@@ -1,7 +1,7 @@
 <tr>
     <td>{{ $index }}</td>
     <td>{{ $created_at }}</td>
-    <td>{{ $nomor_ticket }}</td>
+    <td>{{ $no_ticket }}</td>
     <td>
         @if ($label=='0')
             <span class="badge bg-secondary">Tidak Butuh Cepat</span>
@@ -21,14 +21,28 @@
         @endif
     </td>
     <td>
-        @if( Session::get('level_user')==3 )
-            @if ($userPic=="Belum ada PIC")
+        @if( Session::get('level_user')==3)
+            @if ($userPic=="Belum ada PIC" && !$ismyticket)
                 <button type="button" class="btn btn-primary AddMember" data-url="{{ route('pic-member.create',['id'=>$id]) }}" data-bs-toggle="modal" data-bs-target=".modalPIC">Tambah PIC</button>
             @else
                 {{ $userPic }}
             @endif
         @else
             {{ $userPic }}
+        @endif
+
+        @if($memberPic != '' && count($memberPic)>0)
+            <ul>
+                @foreach ($memberPic as $member)
+                    @php $member = (object) $member; @endphp
+                    @if(count($member->user)>0)
+                        @php $user = (object) $member->user[0]; @endphp
+                        <li>
+                            {{ $user->nama_karyawan }}
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
         @endif
     </td>
     <td>
@@ -41,7 +55,11 @@
         @endif
     </td>
     <td>
+        @if(!$disabledetail)
         <a class="btn btn-sm btn-primary" href="{{ route('my-ticket.detail', ['id'=> $id]) }}" >Detail</a>
+        @endif
+        @if(!$disabletutup)
         <a class="btn btn-sm btn-danger" href="{{ route('my-ticket.destroy', ['id'=> $id]) }}" >Tutup</a>
+        @endif
     </td>
 </tr>

@@ -23,8 +23,8 @@ class Tickets extends Model
     // {
     //     return DB::table('user')->where('id',$this->id_user_pic)->first();
     // }
-    // public function pic_member()
-    // {
-    //     return $this->hasMany(PicMember::class,'id_ticket');
-    // }
+    public function pic_member()
+    {
+        return $this->hasMany(PicMember::class,'id_ticket');
+    }
 }

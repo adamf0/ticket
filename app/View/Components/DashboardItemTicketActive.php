@@ -12,22 +12,24 @@ class DashboardItemTicketActive extends Component
      * @return void
      */
     public $index = 0;
-    public $created_at = "0000-00-00";
+    public $createdat = "0000-00-00";
     public $no_ticket = '';
     public $label = 0;
     public $judul = '';
     public $deskripsi = '';
     public $foto = '';
     public $userPic = '';
+    public $memberPic = '';
     public $status = 0;
 
-    public function __construct($index=0,$created_at="0000-00-00",$no_ticket='',$label=0,$judul='',$deskripsi='',$foto='',$userPic='',$status=0)
+    public function __construct($index=0,$createdat="0000-00-00",$noticket='',$label=0,$judul='',$deskripsi='',$foto='',$userPic='',$memberPic='',$status=0)
     {
         $this->index = $index;
-        $this->created_at = \Carbon\Carbon::parse($created_at)->format("l, j F Y");
-        $this->no_ticket = $no_ticket;
+        $this->createdat = $createdat;
+        $this->no_ticket = $noticket;
         $this->label = $label;
         $this->judul = $judul;
+        $this->memberPic = json_decode($memberPic,true);
         $this->deskripsi = $deskripsi;
         $this->foto = $foto;
         $this->userPic = $userPic;
@@ -41,14 +43,17 @@ class DashboardItemTicketActive extends Component
      */
     public function render()
     {
+        // dd($this);
         return view('components.dashboard-item-ticket-active',[
-            "created_at" => $this->index,
+            "index" => $this->index,
+            "created_at" => $this->createdat,
             "no_ticket" => $this->no_ticket,
             "label" => $this->label,
             "judul" => $this->judul,
             "deskripsi" => $this->deskripsi,
             "foto" => $this->foto,
             "userPic" => $this->userPic,
+            "memberPic" => $this->memberPic,
             "status" => $this->status
         ]);
     }

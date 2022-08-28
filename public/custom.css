@@ -54,6 +54,13 @@ tbody{
     border-radius: 8px;
 }
 
+.card.card-green{
+    background: #3cf266;
+    color: white;
+    border: 0px solid white;
+    border-radius: 8px;
+}
+
 .image-login{
     background-image: url("assets/illustration-login.png");
     height: 100vh;

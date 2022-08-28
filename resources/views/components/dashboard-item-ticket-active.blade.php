@@ -20,11 +20,26 @@
             {{ $foto }}
         @endif
     </td>
-    <td>{{ $userPic }}</td>
     <td>
-        @if ($label==0)
+        {{ $userPic }}
+        @if($memberPic != '' && count($memberPic)>0)
+            <ul>
+                @foreach ($memberPic as $member)
+                    @php $member = (object) $member; @endphp
+                    @if(count($member->user)>0)
+                        @php $user = (object) $member->user[0]; @endphp
+                        <li>
+                            {{ $user->nama_karyawan }}
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+        @endif
+    </td>
+    <td>
+        @if ($status==0)
             <span class="badge bg-warning">Menunggu Sesi</span>
-        @elseif ($label==1)
+        @elseif ($status==1)
             <span class="badge bg-success">Memulai Sesi</span>
         @else
             <span class="badge bg-danger">Menutup Sesi</span>
