@@ -1,3 +1,5 @@
+<x-top-content title="Troubleshooting" subtitle="Tambahkan tiket untuk memulai permintaan penanganan troubleshooting" img="<?php echo asset('assets/illus4.png'); ?>" type="troubleshooting"></x-top-content>
+
 <!-- Tiket Troubleshooting -->
 <div class="card card-round mb-4">
     <div class="card-body">

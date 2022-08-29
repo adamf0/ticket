@@ -11,9 +11,16 @@ class TopContent extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $title = '';
+    public $subtitle = '';
+    public $img = '';
+    public $type = '';
+    public function __construct($title = '', $subtitle = '', $img = '', $type='')
     {
-        //
+        $this->title = $title;
+        $this->subtitle = $subtitle;
+        $this->img = $img;
+        $this->type = $type;
     }
 
     /**
@@ -23,6 +30,11 @@ class TopContent extends Component
      */
     public function render()
     {
-        return view('components.top-content');
+        return view('components.top-content',[
+            "title"=>$this->title,
+            "subtitle"=>$this->subtitle,
+            "img"=>$this->img,
+            "type"=>$this->type
+        ]);
     }
 }

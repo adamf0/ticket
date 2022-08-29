@@ -4,6 +4,8 @@
     }
 </style>
 
+<x-top-content title="MyTiket" subtitle="Seluruh tiket anda ada di list bawah, tambahkan tiket untuk memulai permintaan penanganan troubleshooting, pengadaan barang dan maintenance" img="<?php echo asset('assets/illus3.png'); ?>" type="myticket"></x-top-content>
+
 <!-- My Tiket -->
 <div class="card card-round p-2 mb-4">
                 <div class="card-body">

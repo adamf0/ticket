@@ -43,7 +43,6 @@
         <!-- main content page -->
 
         <div id="main">
-            <x-top-content></x-top-content>
             @section('content')
             @show
         </div>
