@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Tickets;
-use App\Models\Chats;
-use App\Models\PicMember;
+use App\Tickets;
+use App\Chats;
+use App\PicMember;
 use Session;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\ClientException;
@@ -13,9 +12,9 @@ use GuzzleHttp\Exception\ClientException;
 class DetailTicketController extends Controller
 {
     public function __construct(){
-        if(!Session::has('id_user')){
-            return \Redirect::to('/')->send();
-        }
+        // if(!Session::has('id_user')){
+        //     return \Redirect::to('/')->send();
+        // }
         // \Debugbar::enable();
         // dd(Session::all());
     }
@@ -67,10 +66,10 @@ class DetailTicketController extends Controller
             ///mapping ticket with data user from server///
             $ticket = Tickets::with(['progress','pic_member'])->findOrFail($id);
             $user = $listUser->filter(function($u) use ($ticket) {
-                return stripos($u->nik,$ticket->id_user) !== false;
+                return $u->nik==$ticket->id_user;
             })->values();
             $userPic = $listUser->filter(function($u) use ($ticket) {
-                return stripos($u->nik,$ticket->id_user_pic) !== false;
+                return $u->nik==$ticket->id_user_pic;
             })->values();
 
             unset($ticket->id_user);
@@ -80,7 +79,7 @@ class DetailTicketController extends Controller
 
             $ticket->pic_member->each(function ($listMember) use($listUser){
                 $user = $listUser->filter(function($u) use ($listMember) {
-                    return stripos($u->nik,$listMember->id_user) !== false;
+                    return $u->nik==$listMember->id_user;
                 })->values()->toArray();
                 unset($listMember->id_user);
                 $listMember->user = $user;
@@ -90,10 +89,10 @@ class DetailTicketController extends Controller
             $chats = Chats::where('id_ticket',$id)->get();
                 $chats->each(function ($c) use($listUser){
                     $toUser = $listUser->filter(function($u) use ($c) {
-                        return stripos($u->nik,$c->to_user) !== false;
+                        return $u->nik==$c->to_user;
                     })->values();
                     $fromUser = $listUser->filter(function($u) use ($c) {
-                        return stripos($u->nik,$c->from_user) !== false;
+                        return $u->nik==$c->from_user;
                     })->values();
 
                     unset($c->id_user);

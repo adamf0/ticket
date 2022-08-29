@@ -82,16 +82,21 @@
                         <th scope="col">Foto</th>
                         <th scope="col">PIC</th>
                         <th scope="col">Status</th>
-                        @if (Session::get('level_user')==2 || Session::get('level_user')==1)
                         <th scope="col">Aksi</th> 
-                        @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($tickets->tugas as $index => $ticket)
                         @php
-                            $disabledetail = Session::get('level_user')==3? true:false;
-                            $disabletutup  = Session::get('level_user')==3 || Session::get('level_user')==2? true:false;
+                            $disabledetail = false;
+                            $disabletutup  = ( 
+                                                Session::get('level_user')==2 || 
+                                                count($ticket->userPic)==0 || 
+                                                (
+                                                    count($ticket->userPic)>0 && 
+                                                    Session::get('id_user')!=$ticket->userPic[0]->nik
+                                                )
+                                            ) ? true:false;
                         @endphp
                             <x-my-ticket-item-ticket 
                                 index='{{ $index+1 }}' 

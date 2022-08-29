@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Tickets;
-use App\Models\Chats;
-use App\Models\Users;
+use App\Tickets;
 use Session;
 
 class FormTicketController extends Controller

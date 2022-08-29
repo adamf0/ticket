@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chats;
-use App\Models\Tickets;
+use App\Chats;
+use App\Tickets;
 use Illuminate\Http\Request;
 use Session;
 

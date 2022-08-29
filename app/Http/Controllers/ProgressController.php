@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Progress;
+use App\Progress;
 use Illuminate\Http\Request;
 use Session;
 

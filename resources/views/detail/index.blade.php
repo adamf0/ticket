@@ -8,7 +8,7 @@
                         <div class="col-4">
                             <img 
                                 class="img-round" 
-                                src='@if (file_exists(public_path()."/ticket/$ticket->foto")) {{ asset("ticket/$ticket->foto"); }} @else {{ asset("dummyimg.png"); }} @endif' 
+                                src='@if (file_exists(public_path()."/ticket/$ticket->foto")) {{ asset("ticket/$ticket->foto") }} @else {{ asset("dummyimg.png") }} @endif' 
                                 alt=""
                                 style="width: 100%; height: 100%">
                         </div>

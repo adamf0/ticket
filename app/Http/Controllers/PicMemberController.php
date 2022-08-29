@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PicMember;
-use App\Models\Tickets;
+use App\PicMember;
+use App\Tickets;
 use Illuminate\Http\Request;
 use Session;
 

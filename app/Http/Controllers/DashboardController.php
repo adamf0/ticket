@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Tickets;
-use App\Models\Chats;
-use App\Models\PicMember;
+use App\Tickets;
+use App\Chats;
+use App\PicMember;
 use Session;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\ClientException;
@@ -13,9 +12,9 @@ use GuzzleHttp\Exception\ClientException;
 class DashboardController extends Controller
 {
     public function __construct(){
-        if(!Session::has('id_user')){
-            return \Redirect::to('/')->send();
-        }
+        // if(!Session::has('id_user')){
+        //     return \Redirect::to('/')->send();
+        // }
         // \Debugbar::enable();
         // dd(Session::all());
     }
@@ -69,10 +68,10 @@ class DashboardController extends Controller
                 $ticket = Tickets::with(['progress','pic_member'])->where('id_user',Session::get('id_user'))->get();
                 $ticket->each(function ($t) use($listUser){
                     $user = $listUser->filter(function($u) use ($t) {
-                        return stripos($u->nik,$t->id_user) !== false;
+                        return $u->nik==$t->id_user;
                     })->values();
                     $userPic = $listUser->filter(function($u) use ($t) {
-                        return stripos($u->nik,$t->id_user_pic) !== false;
+                        return $u->nik==$t->id_user_pic;
                     })->values();
 
                     unset($t->id_user);
@@ -82,7 +81,7 @@ class DashboardController extends Controller
 
                     $t->pic_member->each(function ($listMember) use($listUser){
                         $user = $listUser->filter(function($u) use ($listMember) {
-                            return stripos($u->nik,$listMember->id_user) !== false;
+                            return $u->nik==$listMember->id_user;
                         })->values()->toArray();
                         unset($listMember->id_user);
                         $listMember->user = $user;
@@ -95,7 +94,7 @@ class DashboardController extends Controller
                         return true;
                 }
                 else{
-                        return stripos($t->user[0]->nik,$id_user) !== false && $t->status==1;
+                        return $t->user[0]->nik==$id_user && $t->status==1;
                 }
                 })->values();
 
