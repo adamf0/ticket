@@ -4,7 +4,12 @@
     }
 </style>
 
-<x-top-content title="MyTiket" subtitle="Seluruh tiket anda ada di list bawah, tambahkan tiket untuk memulai permintaan penanganan troubleshooting, pengadaan barang dan maintenance" img="<?php echo asset('assets/illus3.png'); ?>" type="myticket"></x-top-content>
+<x-top-content 
+title="MyTiket" 
+subtitle="Seluruh tiket anda ada di list bawah, tambahkan tiket untuk memulai permintaan penanganan troubleshooting, pengadaan barang dan maintenance" 
+img="<?php echo asset('assets/illus3.png'); ?>" 
+type="myticket">
+</x-top-content>
 
 <!-- My Tiket -->
 <div class="card card-round p-2 mb-4">
@@ -41,6 +46,9 @@
                             </thead>
                             <tbody>
                                 @foreach ($tickets->pribadi as $index => $ticket)
+                                @php
+                                    $disabletutup = ($ticket->status==2? true:false);
+                                @endphp
                                     <x-my-ticket-item-ticket 
                                         index='{{ $index+1 }}' 
                                         id='{{ $ticket->id }}' 
@@ -53,6 +61,7 @@
                                         userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_karyawan) }}' 
                                         memberPic='<?php echo json_encode($ticket->pic_member->toArray()); ?>'
                                         status='{{ $ticket->status }}' 
+                                        disabletutup='{{ $disabletutup }}'
                                         ismyticket=true>
                                     </x-my-ticket-item-ticket>
                                 @endforeach
@@ -97,7 +106,8 @@
                                                 (
                                                     count($ticket->userPic)>0 && 
                                                     Session::get('id_user')!=$ticket->userPic[0]->nik
-                                                )
+                                                ) ||
+                                                $ticket->status==2
                                             ) ? true:false;
                         @endphp
                             <x-my-ticket-item-ticket 

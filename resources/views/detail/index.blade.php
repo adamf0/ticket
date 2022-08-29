@@ -8,7 +8,7 @@
                         <div class="col-4">
                             <img 
                                 class="img-round" 
-                                src='@if (file_exists(public_path()."/ticket/$ticket->foto")) {{ asset("ticket/$ticket->foto") }} @else {{ asset("dummyimg.png") }} @endif' 
+                                src='@if($ticket->foto!="" && file_exists(public_path()."/ticket/$ticket->foto")) {{ asset("ticket/$ticket->foto") }} @else {{ asset("assets/no-image.jpg") }} @endif' 
                                 alt=""
                                 style="width: 100%; height: 100%">
                         </div>
@@ -80,7 +80,7 @@
         </div>
     </div>
 
-    @if (Session::get('level_user')=='3' || Session::get('level_user')=='2')
+    @if ( ((Session::get('level_user')=='3' || Session::get('level_user')=='2')) && Session::get('id_user')==$ticket->userPic[0]->nik )
     <!-- Perkembangan Tugas -->
     <div class="card card-round mb-4">
         <div class="card-body mx-2 mb-4">
