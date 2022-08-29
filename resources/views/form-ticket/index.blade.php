@@ -8,10 +8,10 @@
                     <label for="exampleInputEmail1" class="form-label">Label (*)</label>
                     <select class="form-select" name="type_ticket" required>
                         <option value="">-- Pilih Tipe Tiket --</option>
-                        <option value="0" <?php if($type=="troubleshooting"){ echo "selected"; } else{ echo "disabled"; } ?>>Troubleshooting</option>
-                        <option value="1" <?php if($type=="permintaan_barang"){ echo "selected"; } else{ echo "disabled"; } ?>>Permintaan Barang</option>
-                        <option value="2" <?php if($type=="maintenance"){ echo "selected"; } else{ echo "disabled"; } ?>>Maintenance</option>
-                        <option value="3" <?php if($type=="request_personil"){ echo "selected"; } else{ echo "disabled"; } ?>>Request Personil</option>
+                        <option value="0" <?php if($type=="all"){ echo ""; } else if($type=="troubleshooting"){ echo "selected"; } else{ echo "disabled"; } ?>>Troubleshooting</option>
+                        <option value="1" <?php if($type=="all"){ echo ""; } else if($type=="permintaan_barang"){ echo "selected"; } else{ echo "disabled"; } ?>>Permintaan Barang</option>
+                        <option value="2" <?php if($type=="all"){ echo ""; } else if($type=="maintenance"){ echo "selected"; } else{ echo "disabled"; } ?>>Maintenance</option>
+                        <option value="3" <?php if($type=="all"){ echo ""; } else if($type=="request_personil"){ echo "selected"; } else{ echo "disabled"; } ?>>Request Personil</option>
                     </select>
                 </div>
                 <div class="col-6">

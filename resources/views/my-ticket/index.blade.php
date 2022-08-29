@@ -14,7 +14,7 @@
                         <div class="col-6">
                             <a href="
                             @if ($tickets->total_waiting <= 3)
-                                {{ route('form-ticket.index',['type'=>'troubleshooting']) }}
+                                {{ route('form-ticket.index',['type'=>'all']) }}
                             @else
                                 #
                             @endif
