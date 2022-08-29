@@ -6,7 +6,7 @@
         <form action="{{ route('form-ticket.create') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 mb-2">
                     <label for="exampleInputEmail1" class="form-label">Label (*)</label>
                     <select class="form-select" name="type_ticket" required>
                         <option value="">-- Pilih Tipe Tiket --</option>
@@ -16,7 +16,7 @@
                         <option value="3" <?php if($type=="all"){ echo ""; } else if($type=="request_personil"){ echo "selected"; } else{ echo "disabled"; } ?>>Request Personil</option>
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="col-6 mb-2">
                     <label for="exampleInputEmail1" class="form-label">Label (*)</label>
                     <select class="form-select" name="label" required>
                         <option value="">-- Pilih Label --</option>
@@ -25,12 +25,12 @@
                         <option value="2">Butuh Cepat</option>
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="col-6 mb-2">
                     <label for="exampleInputEmail1" class="form-label">Judul (*)</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="judul" required/>
                 </div>
-                <div class="col-6">
-                    <label for="formFile" class="form-label">Foto</label>
+                <div class="col-6 mb-2">
+                    <label for="formFile" class="form-label">Attachment</label>
                     <input class="form-control" type="file" id="formFile" name="foto"/>
                 </div>
                 <div class="col-12">
