@@ -1,3 +1,4 @@
+    <x-top-content title="Selamat Datang di Aplikasi Help Desk IT" subtitle="Aplikasi pelayanan untuk mempermudah dalam penanganan troubleshooting, pengadaan barang dan maintenance" img="<?php echo asset('assets/illus1.png'); ?>" type="dashboard"></x-top-content>
     <!-- Detail -->
     <div class="card card-round mb-4">
         <div class="card-body mx-2 mb-4">
@@ -80,7 +81,13 @@
         </div>
     </div>
 
-    @if ( ((Session::get('level_user')=='3' || Session::get('level_user')=='2')) && Session::get('id_user')==$ticket->userPic[0]->nik )
+    @if ( 
+            ( 
+                Session::get('level_user')!='1' && 
+                (count($ticket->userPic)>0 && Session::get('id_user')==$ticket->id_user_pic) 
+            ) ||
+            $ticket->is_member==true
+        )
     <!-- Perkembangan Tugas -->
     <div class="card card-round mb-4">
         <div class="card-body mx-2 mb-4">
@@ -155,7 +162,7 @@
         </div>
     </div>
 
-    <!-- Percakapan -->
+    <!-- Percakapan --> <!-- pic_member error -->
     <div class="card card-round mb-4">
         <div class="card-body mx-2 mb-4">
             <h4 class="py-4"><strong>Percakapan</strong></h4>
@@ -165,24 +172,24 @@
                         Upss belum ada percakapan dengan PIC
                     @else
                         @foreach ($chats as $chat)
-                                @if (count($chat->from_user)==0)
+                            @if (count($chat->from_user_)==0 && $ticket->id_user==$chat->from_user)
+                                <div class="pesanmasuk">
+                                    <p class="title-pesan">
+                                        <i class="material-icons">account_circle</i>
+                                        &nbsp;&nbsp;
+                                        N/A
+                                    </p>
+                                @elseif (count($chat->from_user_)>0 && $ticket->id_user==$chat->from_user)
                                     <div class="pesanmasuk">
                                         <p class="title-pesan">
                                             <i class="material-icons">account_circle</i>
                                             &nbsp;&nbsp;
-                                            N/A
-                                        </p>
-                                @elseif ($chat->from_user[0]->nik==Session::get('id_user'))
-                                    <div class="pesanmasuk">
-                                        <p class="title-pesan">
-                                            <i class="material-icons">account_circle</i>
-                                            &nbsp;&nbsp;
-                                            {{ $chat->from_user[0]->nama_karyawan }}
+                                            {{ $chat->from_user_[0]->nama_karyawan }}
                                         </p>
                                 @else
                                     <div class="pesansaya">
                                         <p class="title-pesan">
-                                            {{ $chat->from_user[0]->nama_karyawan }}
+                                            {{ $chat->from_user_[0]->nama_karyawan }}
                                             &nbsp;&nbsp;
                                             <i class="material-icons">
                                             account_circle</i>

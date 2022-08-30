@@ -63,44 +63,17 @@ class DetailTicketController extends Controller
             $listUser = collect($responseBody->listdata);        
             ///get all user in///
 
-            ///mapping ticket with data user from server///
-            $ticket = Tickets::with(['progress','pic_member'])->findOrFail($id);
-            $user = $listUser->filter(function($u) use ($ticket) {
-                return $u->nik==$ticket->id_user;
-            })->values();
-            $userPic = $listUser->filter(function($u) use ($ticket) {
-                return $u->nik==$ticket->id_user_pic;
-            })->values();
+            $ticket = Tickets::with(['progress','pic_member'])
+                        ->findOrFail($id);
+            $check = PicMember::where(["id_ticket"=>$ticket->id,"id_user"=>Session::get('id_user')])->get()->count();
+            $ticket->is_member = $check>0;
 
-            unset($ticket->id_user);
-            $ticket->user = $user;
-            unset($ticket->id_user_pic);
-            $ticket->userPic = $userPic;
-
-            $ticket->pic_member->each(function ($listMember) use($listUser){
-                $user = $listUser->filter(function($u) use ($listMember) {
-                    return $u->nik==$listMember->id_user;
-                })->values()->toArray();
-                unset($listMember->id_user);
-                $listMember->user = $user;
-            });
-            ///end mapping ticket with data user from server///
+            $this->mappingDataDetail($ticket,$listUser);
 
             $chats = Chats::where('id_ticket',$id)->get();
-                $chats->each(function ($c) use($listUser){
-                    $toUser = $listUser->filter(function($u) use ($c) {
-                        return $u->nik==$c->to_user;
-                    })->values();
-                    $fromUser = $listUser->filter(function($u) use ($c) {
-                        return $u->nik==$c->from_user;
-                    })->values();
-
-                    unset($c->id_user);
-                    $c->to_user = $toUser;
-                    unset($c->id_user_pic);
-                    $c->from_user = $fromUser;
-                });
-            ///end mapping ticket with data user from server///
+            $chats->each(function ($c) use($listUser){
+                $this->mappingDataChat($c,$listUser);
+            });
             // dd($listUser,$ticket,$chats,$users);
 
             return view('index',[
@@ -119,5 +92,43 @@ class DetailTicketController extends Controller
                 "chats"=>[],
             ]);
         }
+    }
+    function mappingDataDetail($ticket,$listUser){
+        $user = $listUser->filter(function($u) use ($ticket) {
+            return $u->nik==$ticket->id_user;
+        })->values();
+        $userPic = $listUser->filter(function($u) use ($ticket) {
+            return $u->nik==$ticket->id_user_pic;
+        })->values();
+
+        // unset($ticket->id_user);
+        $ticket->user = $user;
+        // unset($ticket->id_user_pic);
+        $ticket->userPic = $userPic;
+
+        $ticket->pic_member->each(function ($listMember) use($listUser){
+            $user = $listUser->filter(function($u) use ($listMember) {
+                return $u->nik==$listMember->id_user;
+            })->values()->toArray();
+            // unset($listMember->id_user);
+            $listMember->user = $user;
+        });
+
+        return $ticket;
+    }
+    function mappingDataChat($chat,$listUser){
+        $toUser = $listUser->filter(function($u) use ($chat) {
+            return $u->nik==$chat->to_user;
+        })->values();
+        $fromUser = $listUser->filter(function($u) use ($chat) {
+            return $u->nik==$chat->from_user;
+        })->values();
+
+        // unset($c->id_user);
+        $chat->to_user_ = $toUser;
+        // unset($c->id_user_pic);
+        $chat->from_user_ = $fromUser;
+
+        return $chat;
     }
 }

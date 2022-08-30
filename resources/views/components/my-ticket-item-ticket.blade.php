@@ -59,7 +59,7 @@
         <a class="btn btn-sm btn-primary" href="{{ route('my-ticket.detail', ['id'=> $id]) }}" >Detail</a>
         @endif
         @if(!$disabletutup)
-        <a class="btn btn-sm btn-danger" href="{{ route('my-ticket.destroy', ['id'=> $id]) }}" >Tutup</a>
+        <a class="btn btn-sm btn-danger delete_item" href="#" data-url="{{ route('my-ticket.destroy', ['id'=> $id]) }}" data-notiket="{{ $no_ticket }}" data-bs-toggle="modal" data-bs-target=".modalDelete">Tutup</a>
         @endif
     </td>
 </tr>

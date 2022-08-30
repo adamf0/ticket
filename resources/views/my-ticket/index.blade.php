@@ -105,7 +105,7 @@ type="myticket">
                                                 count($ticket->userPic)==0 || 
                                                 (
                                                     count($ticket->userPic)>0 && 
-                                                    Session::get('id_user')!=$ticket->userPic[0]->nik
+                                                    Session::get('id_user')!=$ticket->id_user_pic->nik
                                                 ) ||
                                                 $ticket->status==2
                                             ) ? true:false;
@@ -132,8 +132,6 @@ type="myticket">
     </div>
 </div>
 @endif
-
-
 
 <!-- Modal -->
 <div class="modal fade modalPIC">
@@ -176,9 +174,33 @@ type="myticket">
     </div>
 </div>
 
+<!-- Modal Delete -->
+<div class="modal fade modalDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Konfirmasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <p>Apakah anda yakin ingin menghapus tiket <span id="nomor_tiket"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ya</button>
+                <a class="btn btn-primary" id="btn_delete" data-bs-dismiss="modal" href="#">Tutup</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 window.onload = function() {
     var modal = bootstrap.Modal.getInstance($('.modalPIC'));
+    var modalDelete = bootstrap.Modal.getInstance($('.modalDelete'));
 
     $('.MainPIC').select2({
         dropdownParent: $('.modalPIC')
@@ -190,6 +212,14 @@ window.onload = function() {
         var url = $(this).attr('data-url');
         $("#FormPicMember").attr("action", url);
         console.log(url)                    
+    });
+    $('.delete_item').on('click', function (e) {
+        var url = $(this).attr('data-url');
+        var nomor_tiket = $(this).attr('data-notiket');
+        $("#nomor_tiket").text(nomor_tiket);
+        $("#btn_delete").attr('href',url);
+        console.log(url)
+        console.log(nomor_tiket)                    
     });
 }
 </script>

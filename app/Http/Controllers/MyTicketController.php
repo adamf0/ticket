@@ -66,142 +66,109 @@ class MyTicketController extends Controller
             ///end get all user///
             
             if(Session::get('level_user')==1){
-                ///mapping ticket with data user from server///
-                $ticket = Tickets::with(['progress','pic_member'])->where('id_user',Session::get('id_user'))->get();
-                $ticket->each(function ($t) use($listUser){
-                    $user = $listUser->filter(function($u) use ($t) {
-                        return $u->nik==$t->id_user;
-                    })->values();
-                    $userPic = $listUser->filter(function($u) use ($t) {
-                        return $u->nik==$t->id_user_pic;
-                    })->values();
-
-                    unset($t->id_user);
-                    $t->user = $user;
-                    unset($t->id_user_pic);
-                    $t->userPic = $userPic;
-
-                    $t->pic_member->each(function ($listMember) use($listUser){
-                        $user = $listUser->filter(function($u) use ($listMember) {
-                            return $u->nik==$listMember->id_user;
-                        })->values()->toArray();
-                        unset($listMember->id_user);
-                        $listMember->user = $user;
-                    });
-                });
-                ///end mapping ticket with data user from server///
-
-                $datas = $ticket->filter(function($t) use ($id_user) {
-                    if(count($t->user)==0){
-                        return true;
-                    }
-                    else{
-                        return $t->user[0]->nik==$id_user;
-                    }
-                })->values();
-                $total_waiting = count($ticket->whereIn('status', [0,1])->all());
+                $ticket = Tickets::with(['progress','pic_member'])
+                            ->where('id_user',Session::get('id_user'))
+                            ->get();
+                $ticket = $this->mappingData($ticket,$listUser);
 
                 $datas = (object) [
-                    "pribadi"=>$datas,
-                    "total_waiting"=>$total_waiting
+                    "pribadi"=>$ticket,
+                    "total_waiting"=>Tickets::with(['progress','pic_member'])
+                                        ->where('id_user',Session::get('id_user'))
+                                        ->whereIn('status',[0,1])
+                                        ->get()->count()
                 ]; 
             }
             else if(Session::get('level_user')==2){
-                ///mapping ticket with data user from server///
-                $ticket = Tickets::with(['progress','pic_member'])->get();
+                $pribadi = Tickets::with(['progress','pic_member'])
+                            ->where('id_user',Session::get('id_user'))
+                            ->get();
+                $tugas = Tickets::with(['progress','pic_member'])
+                            ->where('id_user_pic',Session::get('id_user'))
+                            ->where('status',1)
+                            ->get()
+                            ->each(function($t){
+                                $t->is_member = false;
+                            });
+                $data_member = \DB::table('ticket as t')
+                                ->select('t.id', 't.no_ticket', 't.id_user', 't.id_user_pic', 'tm.id_user as id_member')
+                                ->crossJoin('ticket_pic_member as tm',function($join){
+                                    $join->on('t.id','=','tm.id_ticket');
+                                })
+                                ->where('tm.id_user',Session::get('id_user'))
+                                ->get()
+                                ->pluck('id')
+                                ->toArray();
 
-                $ticket->each(function ($t) use($listUser){
-                    $user = $listUser->filter(function($u) use ($t) {
-                        return $u->nik==$t->id_user;
-                    })->values();
-                    $userPic = $listUser->filter(function($u) use ($t) {
-                        return $u->nik==$t->id_user_pic;
-                    })->values();
-
-                    unset($t->id_user);
-                    $t->user = $user;
-                    unset($t->id_user_pic);
-                    $t->userPic = $userPic;
-
-                    $t->pic_member->each(function ($listMember) use($listUser){
-                        $user = $listUser->filter(function($u) use ($listMember) {
-                            return $u->nik==$listMember->id_user;
-                        })->values()->toArray();
-                        unset($listMember->id_user);
-                        $listMember->user = $user;
-                    });
-                });
-                ///end mapping ticket with data user from server///
-
-                $tugas = $ticket->filter(function($t) use ($id_user) {
-                    if(count($t->userPic)==0){
-                        return false;
-                    }
-                    else{
-                        return $t->userPic[0]->nik==$id_user;
-                    }
-                })->values();
-                $pribadi = $ticket->filter(function($t) use ($id_user) {
-                if(count($t->user)==0){
-                        return true;
+                if(count($data_member)>0){
+                    $tugas = $tugas->merge(
+                                Tickets::with(['progress','pic_member'])
+                                ->whereIn('id',$data_member)
+                                ->where('status',1)
+                                ->get()
+                                ->each(function($t){
+                                    $t->is_member = true;
+                                })
+                    );
                 }
-                else{
-                        return $t->user[0]->nik==$id_user;
-                }
-                })->values();
-                $total_waiting = count($pribadi->whereIn('status', [0,1])->all());
+
+                $tugas = $this->mappingData($tugas,$listUser);
+                $pribadi = $this->mappingData($pribadi,$listUser);
 
                 $datas = (object) [
                     "tugas"=>$tugas,
                     "pribadi"=>$pribadi,
-                    "total_waiting"=>$total_waiting
+                    "total_waiting"=>Tickets::with(['progress','pic_member'])
+                                        ->where('id_user',Session::get('id_user'))
+                                        ->whereIn('status',[0,1])
+                                        ->get()->count()
                 ];
             }
-            else{ //bug admin<=>admin
-                ///mapping ticket with data user from server///
-                $ticket = Tickets::with(['progress','pic_member'])->get();
-                $ticket->each(function ($t) use($listUser){
-                    $user = $listUser->filter(function($u) use ($t) {
-                        return $u->nik==$t->id_user;
-                    })->values();
-                    $userPic = $listUser->filter(function($u) use ($t) {
-                        return $u->nik==$t->id_user_pic;
-                    })->values();
+            else{
+                $pribadi = Tickets::with(['progress','pic_member'])
+                            ->where('id_user',Session::get('id_user'))
+                            ->get();
+                $tugas = Tickets::with(['progress','pic_member'])
+                            ->where('id_user_pic',Session::get('id_user'))
+                            ->get()
+                            ->each(function($t){
+                                $t->is_member = false;
+                            });;
+                $data_member = \DB::table('ticket as t')
+                                ->select('t.id', 't.no_ticket', 't.id_user', 't.id_user_pic', 'tm.id_user as id_member')
+                                ->crossJoin('ticket_pic_member as tm',function($join){
+                                    $join->on('t.id','=','tm.id_ticket');
+                                })
+                                ->where('tm.id_user',Session::get('id_user'))
+                                ->get()
+                                ->pluck('id')
+                                ->toArray();
 
-                    unset($t->id_user);
-                    $t->user = $user;
-                    unset($t->id_user_pic);
-                    $t->userPic = $userPic;
+                if(count($data_member)>0){
+                    $tugas = $tugas->merge(
+                                Tickets::with(['progress','pic_member'])
+                                ->whereIn('id',$data_member)
+                                ->where('status',1)
+                                ->get()
+                                ->each(function($t){
+                                    $t->is_member = true;
+                                })
+                    );
+                }
 
-                    $t->pic_member->each(function ($listMember) use($listUser){
-                        $user = $listUser->filter(function($u) use ($listMember) {
-                            return $u->nik==$listMember->id_user;
-                        })->values()->toArray();
-                        unset($listMember->id_user);
-                        $listMember->user = $user;
-                    });
-                });
-                ///end mapping ticket with data user from server///
-
-                $tugas = $ticket;
-                $pribadi = $ticket->filter(function($t) use ($id_user) {
-                    if(count($t->user)==0){
-                            return true;
-                    }
-                    else{
-                            return $t->user[0]->nik==$id_user;
-                    }
-                })->values();
-
-                $total_waiting = count($pribadi->whereIn('status', [0,1])->all());
+                $tugas = $this->mappingData($tugas,$listUser);
+                $pribadi = $this->mappingData($pribadi,$listUser);
 
                 $datas = (object) [
                     "tugas"=>$tugas,
                     "pribadi"=>$pribadi,
-                    "total_waiting"=>$total_waiting
+                    "total_waiting"=>Tickets::with(['progress','pic_member'])
+                                        ->where('id_user',Session::get('id_user'))
+                                        ->whereIn('status',[0,1])
+                                        ->get()->count()
                 ];
             }
-            // dd($datas,$listUser);
+            // dd($datas);
 
             return view('index',[
                 "parentview"=>"my-ticket",
@@ -225,5 +192,29 @@ class MyTicketController extends Controller
                 "users"=>$users
             ]);
         }
+    }
+
+    function mappingData($list_ticket,$listUser){
+        return $list_ticket->each(function ($t) use($listUser){
+            $user = $listUser->filter(function($u) use ($t) {
+                return $u->nik==$t->id_user;
+            })->values();
+            $userPic = $listUser->filter(function($u) use ($t) {
+                return $u->nik==$t->id_user_pic;
+            })->values();
+
+            // unset($t->id_user);
+            $t->user = $user;
+            // unset($t->id_user_pic);
+            $t->userPic = $userPic;
+
+            $t->pic_member->each(function ($listMember) use($listUser){
+                $user = $listUser->filter(function($u) use ($listMember) {
+                    return $u->nik==$listMember->id_user;
+                })->values()->toArray();
+                // unset($listMember->id_user);
+                $listMember->user = $user;
+            });
+        });
     }
 }
