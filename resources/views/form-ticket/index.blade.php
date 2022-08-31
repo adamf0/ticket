@@ -14,7 +14,7 @@
         $img = asset('assets/illus8.png');
     }
     else{
-        $type_= 'Request Personnil';
+        $type_= 'Request Personel';
         $img = asset('assets/illus7.png');
     }
 ?>
@@ -31,8 +31,8 @@
         <form action="{{ route('form-ticket.create') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-6">
-                    <label for="exampleInputEmail1" class="form-label">Label (*)</label>
+                <div class="col-6 mb-2">
+                    <label for="exampleInputEmail1" class="form-label">Permintaan <i style="font-size:12px; color:red;" class="material-icons">emergency</i></label>
                     <select class="form-select" name="type_ticket" required>
                         <option value="">-- Pilih Tipe Tiket --</option>
                         <option value="0" <?php if($type=="all"){ echo ""; } else if($type=="troubleshooting"){ echo "selected"; } else{ echo "disabled"; } ?>>Troubleshooting</option>
@@ -41,8 +41,8 @@
                         <option value="3" <?php if($type=="all"){ echo ""; } else if($type=="request_personil"){ echo "selected"; } else{ echo "disabled"; } ?>>Request Personil</option>
                     </select>
                 </div>
-                <div class="col-6">
-                    <label for="exampleInputEmail1" class="form-label">Label (*)</label>
+                <div class="col-6 mb-2">
+                    <label for="exampleInputEmail1" class="form-label">Label <i style="font-size:12px; color:red;" class="material-icons">emergency</i></label>
                     <select class="form-select" name="label" required>
                         <option value="">-- Pilih Label --</option>
                         <option value="0">Tidak Butuh Cepat</option>
@@ -50,16 +50,16 @@
                         <option value="2">Butuh Cepat</option>
                     </select>
                 </div>
-                <div class="col-6">
-                    <label for="exampleInputEmail1" class="form-label">Judul (*)</label>
+                <div class="col-6 mb-2">
+                    <label for="exampleInputEmail1" class="form-label">Judul <i style="font-size:12px; color:red;" class="material-icons">emergency</i></label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="judul" required/>
                 </div>
-                <div class="col-6">
-                    <label for="formFile" class="form-label">Foto</label>
+                <div class="col-6 mb-2">
+                    <label for="formFile" class="form-label">Attachment <span style="font-size:12px; color:grey;">optional</span></label>
                     <input class="form-control" type="file" id="formFile" name="foto"/>
                 </div>
                 <div class="col-12">
-                    <label for="exampleFormControlTextarea1" class="form-label" >Deskripsi (*)</label>
+                    <label for="exampleFormControlTextarea1" class="form-label" >Deskripsi <i style="font-size:12px; color:red;" class="material-icons">emergency</i></label>
                     <textarea style="resize: none" class="form-control" id="exampleFormControlTextarea1" rows="5" name="deskripsi" required></textarea>
                 </div>
             </div>

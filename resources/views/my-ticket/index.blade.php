@@ -14,20 +14,17 @@ type="myticket">
 <!-- My Tiket -->
 <div class="card card-round p-2 mb-4">
                 <div class="card-body">
-                    <div class="row justify-content-center py-4">
-                        <div class="col-6">
-                            <h4><strong>My Tiket</strong></h4>
-                        </div>
-                        <div class="col-6">
+                    <h5><strong>My Tiket</strong></h5>
+                    <hr>
+                    <div class="d-flex my-4 justify-content-end">
                             <a href="
                             @if ($tickets->total_waiting <= 3)
                                 {{ route('form-ticket.index',['type'=>'all']) }}
                             @else
                                 #
                             @endif
-                            " class="btn btn-primary" style="float: right;">Tambah Tiket</a>
-                        </div>
-                    </div>                    
+                            " class="btn btn-primary">Tambah Tiket</a>
+                    </div>                  
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
