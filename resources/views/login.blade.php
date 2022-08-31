@@ -17,8 +17,10 @@
         <div class="row">
           <div class="col-12 col-lg-6">
             <div class="card card-login m-5 h-100">
-              <div class="card-body my-4">
-                <h2 class="text-center text-white my-4">Help Desk IT</h2>
+              <div class="card-body mt-4">
+              <div class="py-5">
+                <img style="height:48px;" class="d-flex mx-auto" src="<?php echo asset('assets/logohdw.png'); ?>" alt="">
+              </div>
                 <form action="{{ route('dologin') }}" method="post" class="mx-4">
                   @csrf
                   <div class="mb-3">
