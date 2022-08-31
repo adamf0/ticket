@@ -6,9 +6,9 @@
     <hr />
     <a href="{{ route('dashboard.index') }}"><i class="material-icons">dashboard</i>&nbsp;&nbsp;Dashboard</a>
     <a href="{{ route('my-ticket.index') }}"><i class="material-icons">confirmation_number</i>&nbsp;&nbsp;MyTiket</a>
-    <a href="{{ route('form-ticket.index',['type'=>'troubleshooting']) }}"><i class="material-icons">troubleshoot</i>&nbsp&nbsp;;Troubleshoot</a>
+    <a href="{{ route('form-ticket.index',['type'=>'troubleshooting']) }}"><i class="material-icons">troubleshoot</i>&nbsp;&nbsp;Troubleshoot</a>
     <a href="{{ route('form-ticket.index',['type'=>'permintaan_barang']) }}"><i class="material-icons">add_shopping_cart</i>&nbsp;&nbsp;Permintaan Barang</a>
     <a href="{{ route('form-ticket.index',['type'=>'maintenance']) }}"><i class="material-icons">engineering</i>&nbsp;&nbsp;Maintenance</a>
     <a href="{{ route('form-ticket.index',['type'=>'request_personil']) }}"><i class="material-icons">group_add</i>&nbsp;&nbsp;Request Personel</a>
-    <a href="{{ route('logout') }}"><i class="material-icons">logout</i>&nbsp;Logout</a>
+    <a href="{{ route('logout') }}"><i class="material-icons">logout</i>&nbsp;&nbsp;Logout</a>
 </div>
