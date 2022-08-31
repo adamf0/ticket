@@ -15,7 +15,7 @@
     <div class="image-login">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 col-sm-12">
+          <div class="col-12 col-lg-6">
             <div class="card card-login m-5 h-100">
               <div class="card-body my-4">
                 <h2 class="text-center text-white my-4">Help Desk IT</h2>
