@@ -14,7 +14,7 @@
                 <x-short-menu-item title="Maintenance" img="assets/ic3.png" color="navy" link="{{ route('form-ticket.index',['type'=>'maintenance']) }}"></x-short-menu-item>
             </div>
             <div class="col-6">
-                <x-short-menu-item title="Request Personil" img="assets/ic3.png" color="green" link="{{ route('form-ticket.index',['type'=>'request_personil']) }}"></x-short-menu-item>
+                <x-short-menu-item title="Request Personil" img="assets/ic4.png" color="green" link="{{ route('form-ticket.index',['type'=>'request_personil']) }}"></x-short-menu-item>
             </div>
         </div>
         <h4 class="py-4"><strong>Tiket Aktif</strong></h4>

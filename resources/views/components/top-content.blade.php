@@ -21,7 +21,7 @@
             </div>
             <div class="col-9">
                 <h3 class="pt-3"><strong>{{ $title }}</strong></h3>
-                <p class="pt-3" style="font-size: 18px;">
+                <p class="pt-2" style="font-size: 18px; font-weight:bold; color:grey;">
                     {{ $subtitle }}
                 </p>
             </div>
