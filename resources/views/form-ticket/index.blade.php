@@ -13,9 +13,13 @@
         $type_= 'Maintenance'; 
         $img = asset('assets/illus8.png');
     }
-    else{
-        $type_= 'Request Personel';
+    elseif($type=='request_personil') {
+        $type_= 'Request Personel'; 
         $img = asset('assets/illus7.png');
+    }
+    else{
+        $type_= 'Permintaan Tiket';
+        $img = asset('assets/illus2.png');
     }
 ?>
 <x-top-content 
