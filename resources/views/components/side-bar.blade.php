@@ -1,5 +1,8 @@
 <div class="container">
-    <h4 class="text-center pt-4 pb-3">HelpDesk IT</h4>
+    <!-- <h4 class="text-center pt-4 pb-3">HelpDesk IT</h4> -->
+    <div class="pt-4">
+    <img style="height:32px;" class="d-flex mx-auto" src="<?php echo asset('assets/logohd.png'); ?>" alt="">
+    </div>
     <hr />
     <a href="{{ route('dashboard.index') }}"><i class="material-icons">dashboard</i>&nbsp;Dashboard</a>
     <a href="{{ route('my-ticket.index') }}"><i class="material-icons">confirmation_number</i>&nbsp;MyTiket</a>
