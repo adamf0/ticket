@@ -7,11 +7,17 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                            <img 
-                                class="img-round" 
-                                src='@if($ticket->foto!="" && file_exists(public_path()."/ticket/$ticket->foto")) {{ asset("ticket/$ticket->foto") }} @else {{ asset("assets/no-image.jpg") }} @endif' 
-                                alt=""
-                                style="width: 100%; height: 100%">
+                            @if ($ticket->foto != null && file_exists(public_path()."/ticket/$ticket->foto"))
+                                <a href="<?php echo asset("/ticket/$ticket->foto") ?>" target="_blank">
+                            @endif
+                                    <img 
+                                        class="img-round" 
+                                        src='@if($ticket->foto!="" && file_exists(public_path()."/ticket/$ticket->foto")) {{ asset("ticket/$ticket->foto") }} @else {{ asset("assets/no-image.jpg") }} @endif' 
+                                        alt=""
+                                        style="width: 100%; height: 100%">
+                            @if ($ticket->foto != null && file_exists(public_path()."/ticket/$ticket->foto"))
+                                </a>
+                            @endif
                         </div>
                         <div class="col-2">
                             <p class="title">Tiket :</p>
@@ -60,14 +66,14 @@
                                 @if (count($ticket->userPic)==0)
                                     Belum ditunjuk oleh admin
                                 @else
-                                    {{ $ticket->userPic[0]->nama_karyawan }}
+                                    {{ $ticket->userPic[0]->nama_singkat }}
                                 @endif
 
                                 @if (count($ticket->pic_member)>0)
                                     <ul>
                                         @foreach ($ticket->pic_member as $member)
                                             @if (count($member->user)>0)
-                                                <li>{{ $member->user[0]->nama_karyawan }}</li>
+                                                <li>{{ $member->user[0]->nama_singkat }}</li>
                                             @endif
                                         @endforeach
                                     </ul>
@@ -184,18 +190,26 @@
                                         <p class="title-pesan">
                                             <i class="material-icons">account_circle</i>
                                             &nbsp;&nbsp;
-                                            {{ $chat->from_user_[0]->nama_karyawan }}
+                                            {{ $chat->from_user_[0]->nama_singkat }}
                                         </p>
                                 @else
                                     <div class="pesansaya">
                                         <p class="title-pesan">
-                                            {{ $chat->from_user_[0]->nama_karyawan }}
+                                            {{ $chat->from_user_[0]->nama_singkat }}
                                             &nbsp;&nbsp;
                                             <i class="material-icons">
                                             account_circle</i>
                                         </p>
                                 @endif
-                                        <p class="isi-pesan">{{ $chat->deskripsi }}</p>
+                                        <p class="isi-pesan">
+                                            {{ $chat->deskripsi }}
+                                            <br/>
+                                            @if ($chat->foto != null && file_exists(public_path()."/ticket/$chat->foto"))
+                                                <a href="<?php echo asset("/ticket/$chat->foto") ?>" target="_blank">{{ $chat->foto }} </a>
+                                            @elseif ($chat->foto != null && !file_exists(public_path()."/ticket/$chat->foto"))
+                                                {{ $chat->foto }}
+                                            @endif
+                                        </p>
                                         <p class="waktu-pesan">{{ \Carbon\Carbon::parse($chat->created_at)->format("j F Y H:i") }}</p>
                                     </div>
                         @endforeach

@@ -129,7 +129,7 @@ class MyTicketController extends Controller
                             ->where('id_user',Session::get('id_user'))
                             ->get();
                 $tugas = Tickets::with(['progress','pic_member'])
-                            ->where('id_user_pic',Session::get('id_user'))
+                            // ->where('id_user_pic',Session::get('id_user'))
                             ->get()
                             ->each(function($t){
                                 $t->is_member = false;
@@ -148,7 +148,7 @@ class MyTicketController extends Controller
                     $tugas = $tugas->merge(
                                 Tickets::with(['progress','pic_member'])
                                 ->whereIn('id',$data_member)
-                                ->where('status',1)
+                                // ->where('status',1)
                                 ->get()
                                 ->each(function($t){
                                     $t->is_member = true;

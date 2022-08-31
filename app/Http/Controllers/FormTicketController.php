@@ -41,11 +41,11 @@ class FormTicketController extends Controller
         // dd($ticket);
 
         if($ticket->save()){
-            session(['type_modal' => 'success', 'message' => 'berhasil simpan']);
+            session(['type_modal' => 'success', 'message' => 'berhasil tambah tiket']);
             return redirect()->route('my-ticket.index');
         }
         else{
-            session(['type_modal' => 'fail', 'message' => 'gagal simpan']);
+            session(['type_modal' => 'fail', 'message' => 'gagal tambah tiket']);
             return redirect()->route('form-ticket.index');
         }
     }
@@ -60,11 +60,11 @@ class FormTicketController extends Controller
         $ticket->foto = $ticket->foto;
         $ticket->status = 2;
         if($ticket->save()){
-            session(['type_modal' => 'success', 'message' => 'berhasil hapus']);
+            session(['type_modal' => 'success', 'message' => 'berhasil tutup tiket']);
             return redirect()->route('my-ticket.index');
         }
         else{
-            session(['type_modal' => 'fail', 'message' => 'gagal hapus']);
+            session(['type_modal' => 'fail', 'message' => 'gagal tutup tiket']);
             return redirect()->route('my-ticket.index');
         }
     }

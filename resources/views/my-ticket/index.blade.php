@@ -35,7 +35,7 @@ type="myticket">
                                     <th scope="col">label</th>
                                     <th scope="col">Judul</th>
                                     <th scope="col">Deskripsi</th>
-                                    <th scope="col">Foto</th>
+                                    <th scope="col">File</th>
                                     <th scope="col">PIC</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Aksi</th> 
@@ -55,7 +55,7 @@ type="myticket">
                                         judul='{{ $ticket->judul }}' 
                                         deskripsi='{{ $ticket->deskripsi }}' 
                                         foto='{{ $ticket->foto }}' 
-                                        userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_karyawan) }}' 
+                                        userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_singkat) }}' 
                                         memberPic='<?php echo json_encode($ticket->pic_member->toArray()); ?>'
                                         status='{{ $ticket->status }}' 
                                         disabletutup='{{ $disabletutup }}'
@@ -87,7 +87,7 @@ type="myticket">
                         <th scope="col">label</th>
                         <th scope="col">Judul</th>
                         <th scope="col">Deskripsi</th>
-                        <th scope="col">Foto</th>
+                        <th scope="col">File</th>
                         <th scope="col">PIC</th>
                         <th scope="col">Status</th>
                         <th scope="col">Aksi</th> 
@@ -102,7 +102,7 @@ type="myticket">
                                                 count($ticket->userPic)==0 || 
                                                 (
                                                     count($ticket->userPic)>0 && 
-                                                    Session::get('id_user')!=$ticket->id_user_pic->nik
+                                                    Session::get('id_user')!=$ticket->id_user_pic
                                                 ) ||
                                                 $ticket->status==2
                                             ) ? true:false;
@@ -116,7 +116,7 @@ type="myticket">
                                 judul='{{ $ticket->judul }}' 
                                 deskripsi='{{ $ticket->deskripsi }}' 
                                 foto='{{ $ticket->foto }}' 
-                                userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_karyawan) }}' 
+                                userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_singkat) }}' 
                                 memberPic='<?php echo json_encode($ticket->pic_member->toArray()); ?>'
                                 status='{{ $ticket->status }}' 
                                 disabledetail='{{ $disabledetail }}'
@@ -187,8 +187,8 @@ type="myticket">
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ya</button>
-                <a class="btn btn-primary" id="btn_delete" data-bs-dismiss="modal" href="#">Tutup</a>
+                <a class="btn btn-primary" id="btn_delete" data-bs-dismiss="modal" href="#">Ya</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
             </div>
         </div>
     </div>
@@ -217,6 +217,11 @@ window.onload = function() {
         $("#btn_delete").attr('href',url);
         console.log(url)
         console.log(nomor_tiket)                    
+    });
+    $('#btn_delete').on('click', function (e) {
+        var url = $('#btn_delete').attr('href');
+        console.log(url)          
+        window.location = url;          
     });
 }
 </script>

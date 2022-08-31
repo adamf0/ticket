@@ -32,11 +32,11 @@ class ChatsController extends Controller
         // dd($chat);
         
         if($chat->save()){
-            session(['type_modal' => 'success', 'message' => 'berhasil simpan chat']);
+            session(['type_modal' => 'success', 'message' => 'berhasil kirim pesan']);
             return redirect()->route('my-ticket.detail',['id'=> $id_ticket]);
         }
         else{
-            session(['type_modal' => 'fail', 'message' => 'gagal simpan chat']);
+            session(['type_modal' => 'fail', 'message' => 'gagal kirim pesan']);
             return redirect()->route('my-ticket.detail');
         }
     }

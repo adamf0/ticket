@@ -29,11 +29,11 @@ class PicMemberController extends Controller
         $ticket->updatedBy = Session::get('id_user');
 
         if($ticket->save() && PicMember::insert($data_member)){
-            session(['type_modal' => 'success', 'message' => 'berhasil simpan pic']);
+            session(['type_modal' => 'success', 'message' => 'berhasil tambah pic']);
             return redirect()->route('my-ticket.index');
         }
         else{
-            session(['type_modal' => 'fail', 'message' => 'gagal simpan pic']);
+            session(['type_modal' => 'fail', 'message' => 'gagal tambah pic']);
             return redirect()->route('my-ticket.index');
         }
     }

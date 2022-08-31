@@ -26,23 +26,35 @@
                 <button type="button" class="btn btn-primary AddMember" data-url="{{ route('pic-member.create',['id'=>$id]) }}" data-bs-toggle="modal" data-bs-target=".modalPIC">Tambah PIC</button>
             @else
                 {{ $userPic }}
+                @if($memberPic != '' && count($memberPic)>0)
+                    <ul>
+                        @foreach ($memberPic as $member)
+                            @php $member = (object) $member; @endphp
+                            @if(count($member->user)>0)
+                                @php $user = (object) $member->user[0]; @endphp
+                                <li>
+                                    {{ $user->nama_singkat }}
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                @endif
             @endif
         @else
             {{ $userPic }}
-        @endif
-
-        @if($memberPic != '' && count($memberPic)>0)
+            @if($memberPic != '' && count($memberPic)>0)
             <ul>
                 @foreach ($memberPic as $member)
                     @php $member = (object) $member; @endphp
                     @if(count($member->user)>0)
                         @php $user = (object) $member->user[0]; @endphp
                         <li>
-                            {{ $user->nama_karyawan }}
+                            {{ $user->nama_singkat }}
                         </li>
                     @endif
                 @endforeach
             </ul>
+        @endif
         @endif
     </td>
     <td>

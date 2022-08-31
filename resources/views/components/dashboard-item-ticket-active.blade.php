@@ -29,7 +29,7 @@
                     @if(count($member->user)>0)
                         @php $user = (object) $member->user[0]; @endphp
                         <li>
-                            {{ $user->nama_karyawan }}
+                            {{ $user->nama_singkat }}
                         </li>
                     @endif
                 @endforeach

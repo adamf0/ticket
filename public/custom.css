@@ -160,6 +160,8 @@ tbody{
     border-radius: 8px 0px 8px 0px;
     background-color: #dddddd;
     font-weight: 600;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .pesanmasuk > p.waktu-pesan{

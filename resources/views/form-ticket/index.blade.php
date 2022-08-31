@@ -37,13 +37,24 @@
             <div class="row">
                 <div class="col-6 mb-2">
                     <label for="exampleInputEmail1" class="form-label">Permintaan <i style="font-size:12px; color:red;" class="material-icons">emergency</i></label>
-                    <select class="form-select" name="type_ticket" required>
-                        <option value="">-- Pilih Tipe Tiket --</option>
-                        <option value="0" <?php if($type=="all"){ echo ""; } else if($type=="troubleshooting"){ echo "selected"; } else{ echo "disabled"; } ?>>Troubleshooting</option>
-                        <option value="1" <?php if($type=="all"){ echo ""; } else if($type=="permintaan_barang"){ echo "selected"; } else{ echo "disabled"; } ?>>Permintaan Barang</option>
-                        <option value="2" <?php if($type=="all"){ echo ""; } else if($type=="maintenance"){ echo "selected"; } else{ echo "disabled"; } ?>>Maintenance</option>
-                        <option value="3" <?php if($type=="all"){ echo ""; } else if($type=="request_personil"){ echo "selected"; } else{ echo "disabled"; } ?>>Request Personil</option>
-                    </select>
+                    @if($type=="all")
+                        <select class="form-select" name="type_ticket" required>
+                            <option value="">-- Pilih Tipe Tiket --</option>
+                            <option value="0">Troubleshooting</option>
+                            <option value="1">Permintaan Barang</option>
+                            <option value="2">Maintenance</option>
+                            <option value="3">Request Personil</option>
+                        </select>
+                    @else
+                        <select class="form-select" disabled>
+                            <option value="" disabled>-- Pilih Tipe Tiket --</option>
+                            <option value="0" <?php if($type=="troubleshooting"){ echo "selected"; } else{ echo "disabled"; } ?>>Troubleshooting</option>
+                            <option value="1" <?php if($type=="permintaan_barang"){ echo "selected"; } else{ echo "disabled"; } ?>>Permintaan Barang</option>
+                            <option value="2" <?php if($type=="permintaan_barang"){ echo "selected"; } else{ echo "disabled"; } ?>>Maintenance</option>
+                            <option value="3" <?php if($type=="request_personil"){ echo "selected"; } else{ echo "disabled"; } ?>>Request Personil</option>
+                        </select>
+                        <input type="hidden" name="type_ticket" value="<?php if($type=="troubleshooting"){echo "0";}else if($type=="permintaan_barang"){echo "1";}else if($type=="permintaan_barang"){echo "2";}else{echo "3";} ?>">
+                    @endif
                 </div>
                 <div class="col-6 mb-2">
                     <label for="exampleInputEmail1" class="form-label">Label <i style="font-size:12px; color:red;" class="material-icons">emergency</i></label>

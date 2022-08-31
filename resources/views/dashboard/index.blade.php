@@ -28,7 +28,7 @@
                         <th scope="col">label</th>
                         <th scope="col">Judul</th>
                         <th scope="col">Deskripsi</th>
-                        <th scope="col">Foto</th>
+                        <th scope="col">File</th>
                         <th scope="col">PIC</th>
                         <th scope="col">Status</th>
                     </tr>
@@ -43,7 +43,7 @@
                           judul='{{ $ticket->judul }}' 
                           deskripsi='{{ $ticket->deskripsi }}' 
                           foto='{{ $ticket->foto }}' 
-                          userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_karyawan) }}' 
+                          userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_singkat) }}' 
                           memberPic='<?php echo json_encode($ticket->pic_member->toArray()); ?>'
                           status='{{ $ticket->status }}'>
                         </x-dashboard-item-ticket-active>
