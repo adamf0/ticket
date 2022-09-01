@@ -22,12 +22,19 @@
         $img = asset('assets/illus2.png');
     }
 ?>
-<x-top-content 
+@component('components.top-content', [
+    'title' => $type_,
+    'subtitle'=>'Tambahkan tiket untuk memulai permintaan penanganan {{strtolower($type)}}',
+    'img'=>$img,
+    'type'=>'troubleshooting'
+]) 
+@endcomponent
+<!-- <x-top-content 
     title="{{$type_}}" 
     subtitle="Tambahkan tiket untuk memulai permintaan penanganan {{strtolower($type)}}" 
     img="{{$img}}" 
     type="troubleshooting">
-</x-top-content>
+</x-top-content> -->
 
 <!-- Tiket Troubleshooting -->
 <div class="card card-round mb-4">
@@ -50,7 +57,7 @@
                             <option value="" disabled>-- Pilih Tipe Tiket --</option>
                             <option value="0" <?php if($type=="troubleshooting"){ echo "selected"; } else{ echo "disabled"; } ?>>Troubleshooting</option>
                             <option value="1" <?php if($type=="permintaan_barang"){ echo "selected"; } else{ echo "disabled"; } ?>>Permintaan Barang</option>
-                            <option value="2" <?php if($type=="permintaan_barang"){ echo "selected"; } else{ echo "disabled"; } ?>>Maintenance</option>
+                            <option value="2" <?php if($type=="maintenance"){ echo "selected"; } else{ echo "disabled"; } ?>>Maintenance</option>
                             <option value="3" <?php if($type=="request_personil"){ echo "selected"; } else{ echo "disabled"; } ?>>Request Personil</option>
                         </select>
                         <input type="hidden" name="type_ticket" value="<?php if($type=="troubleshooting"){echo "0";}else if($type=="permintaan_barang"){echo "1";}else if($type=="permintaan_barang"){echo "2";}else{echo "3";} ?>">

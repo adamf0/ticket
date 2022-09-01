@@ -20,7 +20,9 @@
     </head>
     <body>
         <div id="mySidebar" class="sidebar">
-            <x-side-bar></x-side-bar>
+            @component('components.side-bar') 
+            @endcomponent
+            <!-- <x-side-bar></x-side-bar> -->
         </div>
 
         @if( Session::has('type_modal') && Session::has('message') )

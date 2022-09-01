@@ -7,7 +7,7 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -83,6 +83,9 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+                @component('alert', ['foo' => 'bar']) 
+                    You are not allowed to access this resource!
+                @endcomponent
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
@@ -91,7 +94,6 @@
                     <a href="https://blog.laravel.com">Blog</a>
                     <a href="https://nova.laravel.com">Nova</a>
                     <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>

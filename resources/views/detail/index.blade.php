@@ -1,4 +1,11 @@
-    <x-top-content title="Selamat Datang di Aplikasi Help Desk IT" subtitle="Aplikasi pelayanan untuk mempermudah dalam penanganan troubleshooting, pengadaan barang dan maintenance" img="<?php echo asset('assets/illus1.png'); ?>" type="dashboard"></x-top-content>
+    @component('components.top-content', [
+        'title' => 'Selamat Datang di Aplikasi Help Desk IT',
+        'subtitle'=>'Aplikasi pelayanan untuk mempermudah dalam penanganan troubleshooting, pengadaan barang dan maintenance',
+        'img'=>asset('assets/illus1.png'),
+        'type'=>'dashboard'
+    ]) 
+    @endcomponent
+    <!-- <x-top-content title="Selamat Datang di Aplikasi Help Desk IT" subtitle="Aplikasi pelayanan untuk mempermudah dalam penanganan troubleshooting, pengadaan barang dan maintenance" img="<?php echo asset('assets/illus1.png'); ?>" type="dashboard"></x-top-content> -->
     <!-- Detail -->
     <div class="card card-round mb-4">
         <div class="card-body mx-2 mb-4">
@@ -118,9 +125,9 @@
         <div class="card-body mx-2 mb-4">
             <h4 class="py-4"><strong>Pelacakan</strong></h4>
             <div class="card">
-                <div class="card-body pb-0">
+                <div class="card-body">
                     @if (count($ticket->progress)==0)
-                        <span>Upss belum diproses oleh PIC</span>
+                        <!-- <span>Upss belum diproses oleh PIC</span> -->
                     @else
                         @foreach ($ticket->progress as $index => $progress)
                             <p class="isi">{{ $index+1 }}. {{ $progress->deskripsi }}</p>
@@ -175,7 +182,7 @@
             <div class="card">
                 <div class="card-body">
                     @if (count($chats)==0)
-                        Upss belum ada percakapan dengan PIC
+                        <!-- Upss belum ada percakapan dengan PIC -->
                     @else
                         @foreach ($chats as $chat)
                             @if (count($chat->from_user_)==0 && $ticket->id_user==$chat->from_user)

@@ -4,12 +4,20 @@
     }
 </style>
 
-<x-top-content 
-title="MyTiket" 
-subtitle="Seluruh tiket anda ada di list bawah, tambahkan tiket untuk memulai permintaan penanganan troubleshooting, pengadaan barang dan maintenance" 
+@component('components.top-content', [
+    'title' => 'MyTiket',
+    'subtitle'=>'Seluruh tiket anda ada di list bawah, tambahkan tiket untuk memulai permintaan penanganan troubleshooting, pengadaan barang dan maintenance',
+    'img'=>asset('assets/illus3.png'),
+    'type'=>'myticket'
+]) 
+@endcomponent
+
+<!-- <x-top-content 
+title="" 
+subtitle="" 
 img="<?php echo asset('assets/illus3.png'); ?>" 
 type="myticket">
-</x-top-content>
+</x-top-content> -->
 
 <!-- My Tiket -->
 <div class="card card-round p-2 mb-4">
@@ -46,7 +54,24 @@ type="myticket">
                                 @php
                                     $disabletutup = ($ticket->status==2? true:false);
                                 @endphp
-                                    <x-my-ticket-item-ticket 
+                                    @component('components.my-ticket-item-ticket', [
+                                        'index' => $index+1,
+                                        'id'=>$ticket->id,
+                                        'created_at'=>$ticket->created_at->format("l, j F Y"),
+                                        'no_ticket'=>$ticket->no_ticket,
+                                        'label'=>$ticket->label,
+                                        'judul'=>$ticket->judul,
+                                        'deskripsi'=>$ticket->deskripsi,
+                                        'foto'=>$ticket->foto,
+                                        'userPic'=>(count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_singkat),
+                                        'memberPic'=>$ticket->pic_member->toArray(),
+                                        'status'=>$ticket->status,
+                                        'disabledetail'=>false,
+                                        'disabletutup'=>$disabletutup,
+                                        'ismyticket'=>true
+                                    ])  
+                                    @endcomponent
+                                    <!-- <x-my-ticket-item-ticket 
                                         index='{{ $index+1 }}' 
                                         id='{{ $ticket->id }}' 
                                         createdat='{{ $ticket->created_at->format("l, j F Y") }}' 
@@ -56,11 +81,11 @@ type="myticket">
                                         deskripsi='{{ $ticket->deskripsi }}' 
                                         foto='{{ $ticket->foto }}' 
                                         userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_singkat) }}' 
-                                        memberPic='<?php echo json_encode($ticket->pic_member->toArray()); ?>'
+                                        memberPic='<?php //echo json_encode($ticket->pic_member->toArray()); ?>'
                                         status='{{ $ticket->status }}' 
                                         disabletutup='{{ $disabletutup }}'
                                         ismyticket=true>
-                                    </x-my-ticket-item-ticket>
+                                    </x-my-ticket-item-ticket> -->
                                 @endforeach
                             </tbody>
                         </table>
@@ -107,7 +132,24 @@ type="myticket">
                                                 $ticket->status==2
                                             ) ? true:false;
                         @endphp
-                            <x-my-ticket-item-ticket 
+                            @component('components.my-ticket-item-ticket', [
+                                'index' => $index+1,
+                                'id'=>$ticket->id,
+                                'created_at'=>$ticket->created_at->format("l, j F Y"),
+                                'no_ticket'=>$ticket->no_ticket,
+                                'label'=>$ticket->label,
+                                'judul'=>$ticket->judul,
+                                'deskripsi'=>$ticket->deskripsi,
+                                'foto'=>$ticket->foto,
+                                'userPic'=>(count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_singkat),
+                                'memberPic'=>$ticket->pic_member->toArray(),
+                                'status'=>$ticket->status,
+                                'disabledetail'=>$disabledetail,
+                                'disabletutup'=>$disabletutup,
+                                'ismyticket'=>$disabletutup
+                            ])  
+                            @endcomponent
+                            <!-- <x-my-ticket-item-ticket 
                                 index='{{ $index+1 }}' 
                                 id='{{ $ticket->id }}' 
                                 createdat='{{ $ticket->created_at->format("l, j F Y") }}' 
@@ -117,11 +159,11 @@ type="myticket">
                                 deskripsi='{{ $ticket->deskripsi }}' 
                                 foto='{{ $ticket->foto }}' 
                                 userPic='{{ (count($ticket->userPic)==0? "Belum ada PIC":$ticket->userPic[0]->nama_singkat) }}' 
-                                memberPic='<?php echo json_encode($ticket->pic_member->toArray()); ?>'
+                                memberPic='<?php //echo json_encode($ticket->pic_member->toArray()); ?>'
                                 status='{{ $ticket->status }}' 
                                 disabledetail='{{ $disabledetail }}'
                                 disabletutup='{{ $disabletutup }}'>
-                            </x-my-ticket-item-ticket>
+                            </x-my-ticket-item-ticket> -->
                     @endforeach
                 </tbody>
             </table>
