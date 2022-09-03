@@ -141,87 +141,95 @@
     <!-- Pesan -->
     <div class="card card-round mb-4">
         <div class="card-body mx-2 mb-4">
-            <h4 class="py-4"><strong>Pesan</strong></h4>
+            <h4 class="py-4"><strong>Percakapan</strong></h4>
+            <!-- Percakapan --> <!-- pic_member error -->
             <div class="card">
+                        <div class="card-body">
+                            @if (count($chats)==0)
+                                <!-- Upss belum ada percakapan dengan PIC -->
+                            @else
+                                @foreach ($chats as $chat)
+                                    @if (count($chat->from_user_)==0 && $ticket->id_user==$chat->from_user)
+                                        <div class="pesanmasuk">
+                                            <p class="title-pesan">
+                                                <i class="material-icons">account_circle</i>
+                                                &nbsp;&nbsp;
+                                                N/A
+                                            </p>
+                                        @elseif (count($chat->from_user_)>0 && $ticket->id_user==$chat->from_user)
+                                            <div class="pesanmasuk">
+                                                <p class="title-pesan">
+                                                    <i class="material-icons">account_circle</i>
+                                                    &nbsp;&nbsp;
+                                                    {{ $chat->from_user_[0]->nama_singkat }}
+                                                </p>
+                                        @else
+                                            <div class="pesansaya">
+                                                <p class="title-pesan">
+                                                    {{ $chat->from_user_[0]->nama_singkat }}
+                                                    &nbsp;&nbsp;
+                                                    <i class="material-icons">
+                                                    account_circle</i>
+                                                </p>
+                                        @endif
+                                                <p class="isi-pesan">
+                                                    {{ $chat->deskripsi }}
+                                                    <br/>
+                                                    @if ($chat->foto != null && file_exists(public_path()."/ticket/$chat->foto"))
+                                                        <a href="<?php echo asset("/ticket/$chat->foto") ?>" target="_blank">{{ $chat->foto }} </a>
+                                                    @elseif ($chat->foto != null && !file_exists(public_path()."/ticket/$chat->foto"))
+                                                        {{ $chat->foto }}
+                                                    @endif
+                                                </p>
+                                                <p class="waktu-pesan">{{ \Carbon\Carbon::parse($chat->created_at)->format("j F Y H:i") }}</p>
+                                            </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+
+            <div class="card mt-4">
                 <div class="card-body">
                     <form action="{{ route('chat.create',['id'=>$ticket->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="mb-3 col-6">
-                                <label for="" class="form-label">Pesan</label>
-                                <input type="text" name="pesan" class="form-control" id="" aria-describedby="" required @if(
-                                    $ticket->status==0 || 
-                                    count($ticket->userPic) == 0 || 
-                                    $ticket->status==2
-                                ) {{ "disabled" }} @endif>
-                            </div>
-                            <div class="mb-3 col-6">
-                                <label for="formFile" class="form-label">Attachment</label>
-                                <input type="file" name="foto" class="form-control" id="formFile" @if(
+                        <div>
+                            <label for="" class="form-label">Tulis Pesan</label>
+                            <input type="text" name="pesan" class="form-control" id="" aria-describedby="" required @if(
+                                $ticket->status==0 || 
+                                count($ticket->userPic) == 0 || 
+                                $ticket->status==2
+                            ) {{ "disabled" }} @endif>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                <div class="row"> 
+                        <div class="col-6">
+                            <div class="icon-input d-flex pt-3">
+                                <label for="formFile" class="form-label">
+                                    <i class="material-icons">
+                                    attach_file
+                                    </i>
+                                </label>
+                                <input type="file" name="foto" id="formFile" @if(
                                     $ticket->status==0 || 
                                     count($ticket->userPic) == 0 || 
                                     $ticket->status==2
                                 ) {{ "disabled" }} @endif>
                             </div>
                         </div>
-                        <button type="submit" style="float: right;" class="btn btn-primary mt-2 w-25" @if(
+                        <div class="col-6">
+                            <button type="submit" style="float: right;" class="btn btn-primary mt-2 w-25" @if(
                             $ticket->status==0 || 
                             count($ticket->userPic) == 0 || 
                             $ticket->status==2
-                        ) {{ "disabled" }} @endif>Submit</button>
-                    </form>
+                        ) {{ "disabled" }} @endif><span class="d-flex justify-content-center">Submit&nbsp;&nbsp;<i class="material-icons">send</i></span></button>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>    
         </div>
     </div>
 
-    <!-- Percakapan --> <!-- pic_member error -->
-    <div class="card card-round mb-4">
-        <div class="card-body mx-2 mb-4">
-            <h4 class="py-4"><strong>Percakapan</strong></h4>
-            <div class="card">
-                <div class="card-body">
-                    @if (count($chats)==0)
-                        <!-- Upss belum ada percakapan dengan PIC -->
-                    @else
-                        @foreach ($chats as $chat)
-                            @if (count($chat->from_user_)==0 && $ticket->id_user==$chat->from_user)
-                                <div class="pesanmasuk">
-                                    <p class="title-pesan">
-                                        <i class="material-icons">account_circle</i>
-                                        &nbsp;&nbsp;
-                                        N/A
-                                    </p>
-                                @elseif (count($chat->from_user_)>0 && $ticket->id_user==$chat->from_user)
-                                    <div class="pesanmasuk">
-                                        <p class="title-pesan">
-                                            <i class="material-icons">account_circle</i>
-                                            &nbsp;&nbsp;
-                                            {{ $chat->from_user_[0]->nama_singkat }}
-                                        </p>
-                                @else
-                                    <div class="pesansaya">
-                                        <p class="title-pesan">
-                                            {{ $chat->from_user_[0]->nama_singkat }}
-                                            &nbsp;&nbsp;
-                                            <i class="material-icons">
-                                            account_circle</i>
-                                        </p>
-                                @endif
-                                        <p class="isi-pesan">
-                                            {{ $chat->deskripsi }}
-                                            <br/>
-                                            @if ($chat->foto != null && file_exists(public_path()."/ticket/$chat->foto"))
-                                                <a href="<?php echo asset("/ticket/$chat->foto") ?>" target="_blank">{{ $chat->foto }} </a>
-                                            @elseif ($chat->foto != null && !file_exists(public_path()."/ticket/$chat->foto"))
-                                                {{ $chat->foto }}
-                                            @endif
-                                        </p>
-                                        <p class="waktu-pesan">{{ \Carbon\Carbon::parse($chat->created_at)->format("j F Y H:i") }}</p>
-                                    </div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
+    
