@@ -15,15 +15,39 @@
     <div class="image-login">
       <div class="container">
         <div class="row">
-          <div class="col-12 col-lg-6">
-            <div class="card card-login m-5 h-100">
-              <div class="card-body mt-4">
-              <div class="py-5">
+          <div class="col-12 col-md-8">
+            <div class="card card-round my-5 mx-2">
+              <div class="card-body my-4">
+                <div class="mx-4">
+                  <h3>Lihat progres tiket</h3>
+                  <p>Masukan kode tiket untuk melihat detail progres.</p>
+                  <div class="row d-flex align-items-center">
+                    <div class="col-10">
+                      <form action="">
+                        <input class="form-control form-control-lg" type="text" placeholder="Masukan kode tiket" aria-label=".form-control-lg example">
+                      </form>
+                    </div>
+                    <div class="col-2">
+                      <a class="btn btn-lg btn-red" href=""> Lacak</a>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <hr>
+                
+                
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4">
+            <div class="card card-login my-5 mx-2">
+              <div class="card-body my-4">
+              <div class="pt-5">
                 <img style="height:48px;" class="d-flex mx-auto" src="<?php echo asset('assets/logohdw.png'); ?>" alt="">
               </div>
                 <form action="{{ route('dologin') }}" method="post" class="mx-4">
                   @csrf
-                  <div class="mb-3">
+                  <div class="mb-3 mt-5">
                     <label for="exampleInputEmail1" class="form-label text-white">Username</label>
                     <input type="text" name="username" class="form-control form-custom" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                   </div>
@@ -31,8 +55,8 @@
                     <label for="exampleInputPassword1" class="form-label text-white">Password</label>
                     <input type="password" name="password" class="form-control form-custom" id="exampleInputPassword1" required>
                   </div>
-                  <br><br>
-                  <button type="submit" class="btn btn-red w-100">Submit</button>
+                  <br>
+                  <button type="submit" class="btn btn-red w-100 mb-5">Login</button>
                 </form>
               </div>
             </div>

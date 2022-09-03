@@ -25,12 +25,14 @@ tbody{
 .card.card-login{
     border: 0px solid white;
     border-radius: 8px;
-    background-color: #ffffff55;
+    background-color: rgba(255, 255, 255, 0.24);
 }
 
 .card.card-round{
     border: 0px solid white;
     border-radius: 8px;
+    overflow-y: scroll;
+    height: 80vh;
 }
 
 .card.card-red{
@@ -119,7 +121,7 @@ tbody{
     background-color: #ef3e2a3f;
   }
 
-  .sidebar a:active {
+  .active {
     background-color: #ef3e2a3f;
   }
 
