@@ -31,6 +31,11 @@ tbody{
 .card.card-round{
     border: 0px solid white;
     border-radius: 8px;
+}
+
+.card.card-tracking{
+    border: 0px solid white;
+    border-radius: 8px;
     overflow-y: scroll;
     height: 80vh;
 }
