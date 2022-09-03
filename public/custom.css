@@ -104,7 +104,7 @@ tbody{
     background-color: white;
   }
 
-  .sidebar a {
+  .sidebar a, .dropdown-btn{
     text-decoration: none;
     font-size: 16px;
     color: black;
@@ -115,13 +115,18 @@ tbody{
     border-radius: 4px;
   }
 
-  .sidebar a:hover {
+  .sidebar a:hover, .dropdown-btn:hover{
     background-color: #ef3e2a3f;
   }
 
   .sidebar a:active {
     background-color: #ef3e2a3f;
   }
+
+  .dropdown-container {
+    display: none;
+  }
+  
 
 
   #main {
